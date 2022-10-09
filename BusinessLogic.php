@@ -3,7 +3,7 @@
 include "database.php";
 $bl = new BusinessLogic();
 
-if(isset($_POST['spassword']) && isset($_POST['studentid']) || isset($_POST['employeeid']) && isset($_POST['epassword'])) {
+if(isset($_POST['nslogin']) || isset($_POST['nelogin'])) {
     $bl->checkLoginCredentials();
 }
 
@@ -13,6 +13,7 @@ if(isset($_POST['nssubmit'])){
 if(isset($_POST['nesubmit'])){
     $bl->addNewEmployee();
 }
+
 
 class BusinessLogic
 {
@@ -43,19 +44,38 @@ class BusinessLogic
             $stmt->execute();
         } // admin view
         else {
-            $stmt = $this->db->prepare("Select contact.ID,Password, FROM Contact WHERE contact.id=? Password=? and contact.ID==admin.ID");
+            $stmt = $this->db->prepare("Select contact.ID,Password, FROM Contact WHERE contact.id=? and password=? and contact.ID==admin.ID");
             $stmt->bind_param($employeeid, $epassword);
             $stmt->execute();
             $this->student = false;
         }
-        if ($stmt->get_result()->num_rows > 0) {
-            if ($this->bl->student)
-                header("location: newstudent.html");
-            else
-                header("location: newemployee.html");
+
+        // This will change as soon as i have access to db
+        $result=$stmt->get_result();
+
+        if ($result->num_rows() == 0 && $this->bl->student) {
+             header("location: newstudent.html");
         }
-        else {
-            header("Location: registrationform.html");
+        elseif ($result->num_rows() == 0) {
+            echo '<script src="functions.js">
+            window.alert("Contact HR to make an admin acconut");
+            window.location.href="adminlogin.html"</script>';
+        }
+        /**
+        This needs to be worked on for the sole purpose that you dont want to query the db twice.
+
+            if($row['password']!=$spassword || $row['password']!=$epassword){
+                echo '<script type="text/javascript">
+                window.alert("Password is incorrect try again.");
+                window.location.href="studentlogin.html"
+                </script>';
+            }*/
+        else{
+            if($this->bl->student)
+                header("Location: registrationform.html");
+            else {
+                header("Location: reports.html");
+            }
         }
     }
 
@@ -75,7 +95,7 @@ class BusinessLogic
         if($stmt.get_result()->num_rows>0){
             echo '<script type="text/javascript">
                 window.alert("ID is already taken,please try again with a different ID.");
-                window.location.href="newemployee.html.html"
+                window.location.href="newemployee.html"
                 </script>';
         }
 
@@ -167,28 +187,24 @@ class BusinessLogic
             $stmt=$this->db->prepare("SELECT StartDate FROM courses WHERE courseCode=? and semester=? and ? between startDate and dateadd(week,1,startDate) and contact.numberOfCourses <5 and contact.id=xxx.id ");
             $stmt->bind_param($courseCode,$semester,$startDate);
             $stmt->execute();
-
-            if($stmt.get_result()->num_rows==0)
-            {
+            if($stmt.get_result()->num_rows==0) {
                 return "Cannot add a course. Past the one week deadline";
             }
-            else
+            else {
                 $stmt=$this->db->prepare("INSERT INTO XXX (courseCode,semester,instructor,studentId");
                 $stmt->bind_param($courseCode,$semester,$instructor,$stuId);
                 $stmt->execute();
                 $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses+1 where ID=? and userType='Student'");
                 $stmt->bind_param($stuId);
                 $stmt->execute();
+            }
         }
-
-        else
-        {
+        else {
             $stmt=$this->db->prepare("SELECT endDate FROM courses WHERE courseCode=? and semester=? and ? before endDate and studentId=?");
             $stmt->bind_param($courseCode,$semester,$startDate,$stuId);
             $stmt->execute();
 
-            if($stmt.get_result()->num_rows==0)
-            {
+            if($stmt.get_result()->num_rows==0) {
                 return "Cannot drop the course.";
             }
 
@@ -227,16 +243,67 @@ class BusinessLogic
 
     }
 
+    // Change to course params when we get the db
+    public function displayCoursesTable(){
+        $sql="";
+        $stmt =$this->db->query($sql);
+        $result = $stmt->fetch_all(MYSQLI_ASSOC);
+        if ($result->num_rows() >0) {
+            echo "<table>";
+            echo "<tr>";
+                echo "<th>id</th>";
+                echo "<th>first_name</th>";
+                echo "<th>last_name</th>";
+                echo "<th>email</th>";
+            echo "</tr>";
+
+            foreach ($result as $row){
+                echo "<tr>";
+                echo "<td>" . $row['id'] . "</td>";
+                echo "<td>" . $row['first_name'] . "</td>";
+                echo "<td>" . $row['last_name'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    }
+
+    /** Either this redirects you to the page with just that report on it or we would need to use jquery but i dont think
+    thats allowed yet so lets redirect to two diff pages. Or we can hide them with js and show when we click a button */
+    public function displayReport($reportType){
+        if($reportType == "courses") {
+            $sql="";
+        }
+        else {
+            $sql="";
+        }
+        $stmt =$this->db->query($sql);
+        $result = $stmt->fetch_all(MYSQLI_ASSOC);
+
+        if ($result->num_rows() >0) {
+            echo "<table>";
+            echo "<tr>";
+            echo "<th>id</th>";
+            echo "<th>first_name</th>";
+            echo "<th>last_name</th>";
+            echo "<th>email</th>";
+            echo "</tr>";
+
+            foreach ($result as $row){
+                echo "<tr>";
+                echo "<td>" . $row['id'] . "</td>";
+                echo "<td>" . $row['first_name'] . "</td>";
+                echo "<td>" . $row['last_name'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    }
     public function dbInit()
     {
         $db = new database();
 //        $db->db_connect();
     }
 }
-
-/// STUDENT
-/// send all post variables to student form
-/// send it to the view
-///
-///
-///
