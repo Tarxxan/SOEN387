@@ -1,0 +1,58 @@
+
+
+::-webkit-scrollbar {
+ display: none; !important
+}
+body {
+    background-color: rgb(70, 65, 70);
+}
+
+/* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
+.navbar {
+    overflow: hidden;
+    background-color: rgb(70, 65, 70);
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+    float: left;
+    display: block;
+    color: rgb(70, 65, 70);
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+
+/* Right-aligned link */
+.navbar a.right {
+    float: right;
+}
+
+/* Change color on hover */
+.navbar a:hover {
+    background-color: rgba(114, 97, 124, 0.9);
+    color: rgb(70, 65, 70);
+}
+
+/* Active/current link */
+.navbar a.active {
+    background-color: rgba(180, 172, 179, 0.9);
+    color: #464146;
+}
+.responsive-iframe {
+    position: fixed;
+    padding-bottom: 100%; /* 1:1 Aspect Ratio */
+    margin-top: 60px;
+    z-index: 1;
+    width: 100vw;
+    height: 99vh;
+    resize: both;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: none;
+
+}

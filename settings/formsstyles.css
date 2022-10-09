@@ -1,0 +1,44 @@
+/*https://codepen.io/ganeshraju/pen/PXgYOz*/
+@import url("https://fonts.googleapis.com/css?family=PT+Sans");
+
+
+
+a {
+    color: #333;
+}
+a:hover {
+    color: #72617c;
+    text-decoration: none;
+}
+.card {
+    border: 0.4rem solid rgba(239, 236, 225, 0.98);
+    top: 10%;
+
+}
+.form-control {
+    background-color: rgba(239, 236, 225, 0.8);
+    padding: 20px;
+    padding: 25px 15px;
+    margin-bottom: 1.3rem;
+    width: -moz-available;
+}
+
+.form-control:focus {
+    color: #000000;
+    background-color: rgba(239, 236, 225, 0.8);
+    border: 3px solid #464146;
+    outline: 0;
+    box-shadow: none;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    background: rgb(49, 11, 64);
+    color:rgba(239, 236, 225, 0.8) ;
+    border: 2px solid rgba(239, 236, 225, 0.8);
+}
+.btn-primary:hover {
+    background-color: rgba(114, 97, 124, 0.9);
+    color: rgb(48, 16, 102);
+     transition: 0.3s;
+}
