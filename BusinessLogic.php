@@ -30,48 +30,42 @@ class BusinessLogic
     {
         extract($_POST);
         // Need to tweak this and the db connection
-        if ($this->db->failedConnection) {
-            http_response_code(500);
-            include('Error500.php'); // provide your own HTML for the error page
-            die();
+//        if ($this->db->failedConnection) {
+//            http_response_code(500);
+//            include('Error500.php'); // provide your own HTML for the error page
+//            die();
+//        }
+
+        // Checks the database for a matching ID in the corresponding tables.
+        if ($studentid) {
+            $stmt = $this->db->prepare("Select studentID FROM railway.student WHERE studentID=?");
+            $stmt->bindParam(1, $studentid);
+            $stmt->execute();
         }
 
-        $stmt = null;
-        // STUDENT view
-        if ($stuId && $stuPass) {
-            $stmt = $this->db->prepare("Select contact.ID,Password, FROM Contact WHERE contact.id=? Password=? and contact.ID==student.ID");
-            $stmt->bind_param($studentid, $spassword);
-            $stmt->execute();
-        } // admin view
         else {
-            $stmt = $this->db->prepare("Select contact.ID,Password, FROM Contact WHERE contact.id=? and password=? and contact.ID==admin.ID");
-            $stmt->bind_param($employeeid, $epassword);
+            $stmt = $this->db->prepare("Select employeeID FROM railway.employee WHERE employeeID=?");
+            $stmt->bindParam(1,$employeeid);
             $stmt->execute();
             $this->student = false;
         }
 
-        // This will change as soon as i have access to db
-        $result=$stmt->get_result();
+        // Returns an associative array or false. Hence the !result== no results found in the database
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result->num_rows() == 0 && $this->bl->student) {
+        //Redirection checks for both students and admins
+        if (!$result && $this->student) {
              header("location: newstudent.html");
         }
-        elseif ($result->num_rows() == 0) {
-            echo '<script src="functions.js">
+
+        elseif (!$result && !($this->bl->student) && isset($employeeid)) {
+            echo '<script type="text/javascript">
             window.alert("Contact HR to make an admin acconut");
             window.location.href="adminlogin.html"</script>';
         }
-        /**
-        This needs to be worked on for the sole purpose that you dont want to query the db twice.
 
-            if($row['password']!=$spassword || $row['password']!=$epassword){
-                echo '<script type="text/javascript">
-                window.alert("Password is incorrect try again.");
-                window.location.href="studentlogin.html"
-                </script>';
-            }*/
         else{
-            if($this->bl->student)
+            if($this->student)
                 header("Location: registrationform.html");
             else {
                 header("Location: reports.html");
@@ -81,89 +75,83 @@ class BusinessLogic
 
     public function addNewEmployee(){
 
-
-        if ($this->db->failedConnection) {
-            die("Failed SQL connection");
-        }
-
         extract($_POST);
 
-        $stmt=$this->db->prepare("SELECT ID FROM Contact WHERE ID=?");
-        $stmt->bind_param($nemployeeeid);
+        //Checks the db if the given id is being used
+        $stmt=$this->db->prepare("SELECT person.personalID FROM railway.person 
+                                            LEFT JOIN railway.employee ON employee.employeeID=person.personalID
+                                            LEFT JOIN railway.student ON person.personalID=student.studentID
+                                            WHERE employee.employeeID=? OR student.studentID =?");
+        $stmt->bindParam(1,$nemployeeid);
+        $stmt->bindParam(2,$nemployeeid);
         $stmt->execute();
 
-        if($stmt.get_result()->num_rows>0){
+        $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if($result){
             echo '<script type="text/javascript">
                 window.alert("ID is already taken,please try again with a different ID.");
                 window.location.href="newemployee.html"
                 </script>';
         }
 
-        /**
-        $neName = $_POST['neName'] ?? false;
-        $neLastName = $_POST['nelastname'] ?? false;
-        $nemployeeeid = $_POST['nemployeeeid'] ?? false;
-        $neestreetnumber = $_POST['neestreetnumber'] ?? false;
-        $nestreetname = $_POST['nestreetname'] ?? false;
-        $necity = $_POST['necity'] ?? false;
-        $neprovince = $_POST['neprovince'] ?? false;
-        $nepostalcode = $_POST['nepostalcode'] ?? false;
-        $nemail = $_POST['nemail'] ?? false;
-        $nephone = $_POST['nephone'] ?? false;
-        $nedateofbirth = $_POST['nedateofbirth'] ?? false;
-        $nepassword = $_POST['nepassword'] ?? false;
-        **/
-
-        $sql="INSERT INTO Contact(ID,Name,lastName,email,phoneNumber,dateOfBirth,streetNumber,streetName,city,postalCode,userType,numberOfCourses)
-        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        // Both table INSERTS since they are all connected
+        $sql="INSERT INTO railway.person(personalID,firstName,lastName,email,phoneNumber,dateOfBirth,streetName,streetNumber,city,country,postalCode)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         $stmt =$this->db->prepare($sql);
-        $stmt->bind_param($nemployeeeid, $neName,$neLastName,$nemail,$nephone,$nedateofbirth,$neestreetnumber,$necity,$nepostalcode,"admin",1);
-
-        // Do we want a check to be sure it was actuall inserted into the db.
+        $bind=array($nemployeeid,$nename,$nelastname,$nemail,$nephone,$nedateofbirth,$nestreetname,$neestreetnumber,$necity,$necountry,$nepostalcode);
+        $stmt=$this->bindAll($stmt,$bind);
         $stmt->execute();
 
+        $sql="INSERT INTO railway.employee(employeeID,personalID)VALUES(?,?)";
+        $stmt =$this->db->prepare($sql);
+        $bind=array($nemployeeid,$nemployeeid);
+        $stmt=$this->bindALl($stmt,$bind);
+        $stmt->execute();
+
+        // REDIRECT PAGE TO CREATE A RPEORT OR TO ADD COURSES( CAROLINA)
+        header("location: reports.html");
+
     }
-
+    
     public function addNewStudent(){
-
-        if ($this->db->failedConnection) {
-            die("Failed SQL connection");
-        }
 
         extract($_POST);
 
-        $stmt=$this->db->prepare("SELECT ID FROM Contact WHERE ID=?");
-        $stmt->bind_param($nstudentid);
+        //Checks the db if the given id is being used
+        $stmt=$this->db->prepare("SELECT person.personalID FROM railway.person 
+                                            LEFT JOIN railway.employee ON employee.employeeID=person.personalID
+                                            LEFT JOIN railway.student ON person.personalID=student.studentID
+                                            WHERE employee.employeeID=? OR student.studentID =?");
+        $stmt->bindParam(1,$nstudentid);
+        $stmt->bindParam(2,$nstudentid);
         $stmt->execute();
 
-        if($stmt->get_result()->num_rows>0){
+        $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if($result){
             echo '<script type="text/javascript">
                 window.alert("ID is already taken,please try again with a different ID.");
-                window.location.href="newstudent.html"
+                window.location.href="newemployee.html"
                 </script>';
         }
 
-        /**
-        $nsName = $_POST['nsName'] ?? false;
-        $nsLastName = $_POST['nslastname'] ?? false;
-
-        $nsestreetnumber = $_POST['nsestreetnumber'] ?? false;
-        $nsstreetname = $_POST['nsstreetname'] ?? false;
-        $nscity = $_POST['nscity'] ?? false;
-        $nsprovince = $_POST['nsprovince'] ?? false;
-        $nspostalcode = $_POST['nspostalcode'] ?? false;
-        $nsmail = $_POST['nsmail'] ?? false;
-        $nphone = $_POST['nphone'] ?? false;
-        $nsdateofbirth = $_POST['nsdateofbirth'] ?? false;
-        $nspassword = $_POST['nspassword'] ?? false;
-
-**/
-        $sql="INSERT INTO Contact(ID,Name,lastName,email,phoneNumber,dateOfBirth,streetNumber,streetName,city,postalCode,userType,numberOfCourses)
-        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql="INSERT INTO railway.person(personalID,firstName,lastName,email,phoneNumber,dateOfBirth,streetName,streetNumber,city,country,postalCode)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         $stmt =$this->db->prepare($sql);
-        $stmt->bind_param($nstudentid, $nsName,$nsLastName,$nsmail,$nphone,$nsdateofbirth,$nsestreetnumber,$nscity,$nspostalcode,"student",1);
+        $bind=array($nstudentid,$nsname,$nslastname,$nsemail,$nphone,$nsdateofbirth,$nsstreetname,$nsestreetnumber,$nscity,$nscountry,$nspostalcode);
+        $stmt=$this->bindAll($stmt,$bind);
         $stmt->execute();
 
+        $sql="INSERT INTO railway.student(studentID,personalID)VALUES(?,?)";
+        $stmt =$this->db->prepare($sql);
+        $bind=array($nstudentid,$nstudentid);
+        $stmt=$this->bindALl($stmt,$bind);
+        $stmt->execute();
+
+        // REDIRECT PAGE TO CREATE ADD COURSES( CAROLINA)
+        header("location: reports.html");
     }
 
     public function StudentCourseOptions()
@@ -301,9 +289,17 @@ class BusinessLogic
             echo "</table>";
         }
     }
+
+    public function bindALl($stmt,$arr){
+        for($i=0;$i<count($arr);$i++){
+            $stmt->bindParam($i+1,$arr[$i]);
+        }
+        return $stmt;
+    }
     public function dbInit()
     {
         $db = new database();
-//        $db->db_connect();
+        return $db->db_connect();
+
     }
 }
