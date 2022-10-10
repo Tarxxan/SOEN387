@@ -25,6 +25,7 @@ function comparepasswords() {
 
 }
 
+
 function myFunction() {
     var ns = document.getElementById("nspassword");
     var nsc = document.getElementById("nsconfirm-password")
