@@ -95,9 +95,9 @@ insert into courses values ('SOCI 213','Intro to Society','Fall only ','Friday  
  
 
 -- insert TO enrollment
-insert into enrollment values (32255678,12345678);
-insert into enrollment values (11344678,12345679);
-insert into enrollment values (12225578,12347878);
+insert into enrollment values (32255678,12345678,'MATH 233');
+insert into enrollment values (11344678,12345679,'PHYS 203');
+insert into enrollment values (12225578,12347878,'SOCI 213');
 
 
 
