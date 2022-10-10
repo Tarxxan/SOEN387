@@ -25,6 +25,16 @@ CREATE TABLE `student` (
   CONSTRAINT `student_FK` FOREIGN KEY (`personalID`) REFERENCES `person` (`personalID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- A1_SOEN387.employee definition
+
+CREATE TABLE `employee` (
+  `employeeID` int(10) NOT NULL,
+  `personalID` int(10) NOT NULL,
+  PRIMARY KEY (`employeeID`),
+  KEY `employee_FK` (`personalID`),
+  CONSTRAINT `employee_FK` FOREIGN KEY (`personalID`) REFERENCES `person` (`personalID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- A1_SOEN387.courses definition
 
 CREATE TABLE `courses` (
@@ -33,26 +43,16 @@ CREATE TABLE `courses` (
   `semester` varchar(20) NOT NULL,
   `days` varchar(20) NOT NULL,
   `time` time NOT NULL,
- -- `instructor` varchar(30) NOT NULL,
+  `instructor` varchar(30) NOT NULL,
   `classroom` varchar(30) NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
-  PRIMARY KEY (`courseCode`)
+  `createdBy` int(10) NOT NULL,
+  PRIMARY KEY (`courseCode`),
+  KEY `courses_FK` (`createdBy`),
+  CONSTRAINT `courses_FK` FOREIGN KEY (`createdBy`) REFERENCES `employee` (`employeeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
--- A1_SOEN387.employee definitions
-
-CREATE TABLE `employee` (
-  `employeeID` int(10) NOT NULL,
-  `personalID` int(10) NOT NULL,
- -- `instructor` varchar(30) NOT NULL,
-  PRIMARY KEY (`employeeID`),
-  KEY `employee_FK` (`personalID`),
---  KEY `employee_FK_1` (`instructor`),
-  CONSTRAINT `employee_FK` FOREIGN KEY (`personalID`) REFERENCES `person` (`personalID`)
- -- CONSTRAINT `employee_FK_1` FOREIGN KEY (`instructor`) REFERENCES `courses` (`instructor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- A1_SOEN387.enrollment definition
 
@@ -82,21 +82,23 @@ insert into student values (12345678,12345678);
 insert into student values (12345679,12345679);
 insert into student values (12347878,12347878);
 
-
--- insert TO courses
-insert into courses values ('MATH 233','Advanced Calculus','Winter only','Mondays         ','13:15','DR 3.120','2020-01-05','2020-04-14'); 
-insert into courses values ('PHYS 203','Intro to physics','Fall,Winter ','Tuesdays,Thursday','10:15','SP 2.220','2020-01-05','2020-04-14'); 
-insert into courses values ('SOCI 213','Intro to Society','Fall only ','Friday             ','14:45','LSR 1.300','2022-09-06','2022-12-07'); 
-
 -- insert TO employee
 insert into employee values (33345678,33345678);
 insert into employee values (11115678,11115678);
 insert into employee values (12355578,12355578);
 
+-- insert TO courses
+insert into courses values ('MATH 233','Advanced Calculus','Winter only','Mondays         ','13:15','Mark White','DR 3.120','2020-01-05','2020-04-14','33345678'); 
+insert into courses values ('PHYS 203','Intro to physics','Fall,Winter ','Tuesdays,Thursday','10:15','Mika Martin','SP 2.220','2020-01-05','2020-04-14','11115678'); 
+insert into courses values ('SOCI 213','Intro to Society','Fall only ','Friday             ','14:45','Matt Landon','LSR 1.300','2022-09-06','2022-12-07','12355578'); 
+
+ 
+
 -- insert TO enrollment
 insert into enrollment values (32255678,12345678,'MATH 233');
 insert into enrollment values (11344678,12345679,'PHYS 203');
 insert into enrollment values (12225578,12347878,'SOCI 213');
+
 
 
 
