@@ -12,29 +12,19 @@ class database
     function __construct()
     {
 
-        $json = file_get_contents("databaseDetails.json");
-        $config = json_decode($json, true);
-        $this->host = $config["Data"][0]["Hostname"];
-        $this->user = $config["Data"][0]["Username"];
-        $this->pw = $config["Data"][0]["Password"];
-        $this->port = $config["Data"][0]["Port"];
-        $this->database = $config["Data"][0]["Database"];
-        $this->failedConnection = true;
+        //$json = file_get_contents("databaseDetails.json");
+        //$config = json_decode($json, true);
+        $this->host = "containers-us-west-100.railway.app";
+        $this->user = "root";
+        $this->pw = "R7z7HwpuHJMDlpKXrBO9";
+        $this->port = 6568;
+        $this->database = "railway";
     }
 
 
     public function db_connect()
     {
-        echo $this->user;
-        echo $this->port;
-        echo $this->database;
-        echo $this->pw;
-        echo $this->host;
-        $mysqli = mysqli_connect($this->host, $this->user, $this->pw, $this->database,$this->port);
-        if ($mysqli->connect_errno) {
-            echo "done";
-           $this->failedConnection = true;
-        }
-        return $mysqli;
+        $dsn="mysql:host=".$this->host.";port=".$this->port."dbname=".$this->database;
+        return new PDO($dsn, $this->user, $this->pw);
     }
 }
