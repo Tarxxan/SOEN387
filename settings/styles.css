@@ -1,18 +1,25 @@
 
 ::-webkit-scrollbar {
-  display: contents;
+    display: contents;
 }
+
 body {
 
- background-color: rgba(239, 236, 225, 0.8);
- 		overflow:auto;
-    display:flex;
- flex-direction:column;
+    background-color: rgba(239, 236, 225, 0.8);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
     user-select: text;
-    font-family: "PT Sans", sans-serif;
-   !important
+    font-family: "Cormorant Garamond", sans-serif;
+    font-size: 24px;
+    line-height: 30px;
+    margin: 0;
+    min-height: 100%;
 
-  }
+!important
+
+}
+
 * {
     box-sizing: border-box;
 }
@@ -25,8 +32,7 @@ body {
     background: rgb(49, 11, 64);
     color: rgba(239, 236, 225, 0.8);
     user-select: none;
-    position: -ms-device-fixed;
-;
+    position: -ms-device-fixed;;
 
 }
 
@@ -34,6 +40,7 @@ body {
 .header h1 {
     font-size: 40px;
 }
+
 .header h2 {
     font-size: 24px;
 }
@@ -53,17 +60,16 @@ body {
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
     background-color: rgba(241, 240, 236, 0.98);
-    padding: 20px ;
+    padding: 20px;
 }
 
 /* Main column */
 .main {
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
-    background-color:rgba(241, 240, 236, 0.98);
+    background-color: rgba(241, 240, 236, 0.98);
     padding: 20px;
 }
-
 
 
 /* Footer */
@@ -75,14 +81,19 @@ body {
 
 /* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
 .navbar {
+    height: 50px;
+    -webkit-transition: background-color 200ms ease;
+    transition: background-color 200ms ease;
+    font-family: "Cormorant Garamond", sans-serif;
     overflow: hidden;
-    background-color: rgb(49, 11, 64);
+    background-color: #310b40;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
 }
 
 /* Style the navigation bar links */
+
 .navbar a {
     float: left;
     display: block;
@@ -90,6 +101,9 @@ body {
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
+    -webkit-transition: background-color 200ms ease;
+    transition: background-color 200ms ease;
+    font-family: "Cormorant Garamond", sans-serif;
 }
 
 
@@ -100,14 +114,39 @@ body {
 
 /* Change color on hover */
 .navbar a:hover {
-    background-color: rgba(114, 97, 124, 0.9);
-    color: rgba(239, 236, 225, 0.8);
+    background-color: rgba(180, 172, 179, 0.9);
+    color: rgb(48, 16, 102);
 }
 
 /* Active/current link */
 .navbar a.active {
     background-color: rgba(180, 172, 179, 0.9);
     color: #301066;
+}
+
+.content-section {
+    overflow: hidden;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.content-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1265px;
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
+.w-container::before, .w-container::after {
+
+    content: " ";
+    display: table;
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-column-end: 2;
+    grid-row-end: 2;
+
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -123,9 +162,6 @@ body {
         float: none;
         width: 100%;
     }
-/*breaks an element's content into the specified number of columns*/
-    .content-box {
-        column-count: 3;
-    }
+
 
 }

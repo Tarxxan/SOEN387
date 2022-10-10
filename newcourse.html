@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New&nbsp;course</title>
+</head>
+<body>
+
+<div class="header">
+
+    <h2>New&nbsp;course</h2>
+
+    <div class="header">
+
+        <h2>New&nbsp;course&nbsp;page</h2>
+        <h2></h2>
+    </div>
+    <div class="navbar">
+        <a href="home.html" onclick="processLogout()">Home</a>
+    </div>
+    <h2></h2>
+</div>
+<div class="navbar">
+    <a href="home.html" onclick="processLogout()">Home</a>
+</div>
+
+
+<div class="container">
+
+    <form action="BusinessLogic.php" method="post" target="_self">
+        <div class="row">
+            <div class="snamee">
+
+                <div class="form-group">
+                    <input class="form-control" name="courseCode" placeholder="Course code" required type="text">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="courseTitle" placeholder="Course Title" required type="text">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="semester" placeholder="Semester" required type="text">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" name="days" pattern="\D*" placeholder="days" required type="date">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="time" pattern=[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Time"
+                           required type="text">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="instructor" placeholder="Instructor" required type="text">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="startDate" placeholder="Start Date" required type="date">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="endDate" placeholder="End date" required type="text">
+                </div>
+            </div>
+
+            <div class=" main">
+                <div class="form-group">
+                    <input class="form-control" name="room" placeholder="Room" required type="email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="language" pattern="\D+" placeholder="Language" required
+                           type="text">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" name="langLevel" placeholder="Language level" required type="date">
+                </div>
+
+
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <input class="btn center-box" name="ncsubmit" onclick="processLogin()" type="submit" value="Login">
+                </div>
+            </div>
+        </div>
+    </form>
+    <button class="btn center-box " onclick="window.location.href='reports.html';">Cancel</button>
+
+
+</div>
+
+
+<button class="btn" onClick="window.location.href='newemployee.html';">Create Account</button>
+
+
+</body>
+</html>

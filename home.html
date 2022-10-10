@@ -1,52 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Course&nbsp;Registration&nbsp;home</title>
-	<link rel="stylesheet" href="settings/reset.css">
-	<link rel="stylesheet" href="settings/styles.css" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Course&nbsp;Registration&nbsp;home</title>
+    <link href="settings/reset.css" rel="stylesheet">
+    <link href="settings/styles.css" rel="stylesheet"/>
+    <link href="settings/formsstyles.css" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 </head>
-<body >
+<body>
 
 
 <div class="header">
-	<h1>Welcome to your school website</h1>
-	<br>	<br>
-	<h2>Fall&nbsp;2022</h2>
+    <h1>Welcome to your school website</h1>
+    <br> <br>
+    <h2>Fall&nbsp;2022</h2>
+</div>
+<div class="navbar">
+
 </div>
 
-<div class="row">
-	<div class="main">
-
-		<h1>Students</h1>
-		<br><br>
-
-		<span>If you are as administrator, login to the employee course registration page and sign in to your account with your employee ID and your password</span>
-		<br><br>
-		<form  action="studentlogin.html" target="_self">
-			<input class="btn" type="submit" value="Student" onclick=""></form>
+<div class="content-section wf-section">
+    <div class="content-wrapper w-container">
 
 
-	</div>
-	<div class="side">
+        <h1>Student</h1>
 
-		<h1>Administrators</h1>
+        <br><br>
 
-		<br><br>
+        <span>If you are a student, login to the student course registration page and sign in to your account with your student ID and your password</span>
+        <br><br>
 
-		<span>If you are a student, login to the student course registration page and sign in to your account with your student ID and your password</span>
-		<br><br>
+        <form action="BusinessLogic.php" method="post">
 
-		<form  action="adminlogin.html" target="_self">
-			<input type="submit" value="Administrator" onclick="">
-		</form>
+            <div class="form-group">
+                <label for="studentid"> Student ID</label>
+                <input class="form-control" id="studentid" name="studentid" pattern="^\w{8}"
+                       placeholder="Student ID" required
+                       type="text">
+                <br>
+                <label for="studentpassword"> Password</label>
+                <input class="form-control" id="studentpassword" name="spassword"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                       placeholder="Password"
+                       required
+                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                       type="password">
+            </div>
 
-	</div>
+
+            <input class="btn center-box " name="nslogin" onclick="processLogin()" type="submit"
+                   value="Login">
+
+        </form>
+
+    </div>
+    <div class="content-wrapper w-container">
+
+        <h1>Administrator</h1>
+        <br><br>
+
+        <span>If you are as administrator, login to the employee course registration page and sign in to your account with your employee ID and your password</span>
+        <br><br>
+
+        <form action="BusinessLogic.php" method="POST" target="_self">
+
+            <div class="form-group">
+                <label for="employeeid"> Administrator ID</label>
+                <input class="form-control " id="employeeid" name="employeeid" pattern="^\w{8}"
+                       placeholder="Employee ID" required
+                       type="text">
+                <br>
+
+
+                <label for="employeepassword">Password</label>
+                <input class="form-control " id="employeepassword" name="epassword"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                       placeholder="Password"
+                       required
+                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                       type="password">
+            </div>
+
+            <input class="btn center-box" name="nelogin" onclick="processLogin()" type="submit"
+                   value="Login">
+
+
+        </form>
+    </div>
 
 </div>
+
+
 </body>
-<footer>
 
-</footer>
 </html>

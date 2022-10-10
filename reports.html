@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 
-<html lang="en" dir="ltr">
+<html dir="ltr" lang="en">
 <head>
     <meta charset="utf-8">
     <link href="settings/styles.css" rel="stylesheet"/>
-    <title>Course&nbsp;registration&nbsp;reports</title>
+    <title>Course&nbsp;reports</title>
 </head>
 <body>
-<div class="row">
-    <div class="card">
-        <div class="heading2"> Report </div>
-        <!insert report here/>
+
+<div class="header">
+
+    <h2>Administrator site</h2>
+    <h2></h2>
+</div>
+
+<div class="navbar">
+    <a href="home.html" onclick="processLogout()">Home</a>
+    <a href="newemployee.html">New account</a>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="side">
+
+            <form method="post" name="courseSelection">
+                <p>Courses </p>
+
+                <!--Insert table for the selected course here, link it  -->
+            </form>
+
+
+        </div>
+
+
+        <div class="main">
+
+
+            <p>Students </p>
+
+            <!--Insert table for the selected course here, link it  -->
+        </div>
+
 
     </div>
+
 </div>
 
 
-
-<form action="home.html" target="_self">
-    <input class="btn-primary" type="submit" value="Logout" onclick="endsession()">
-</form>
-
-<script type="text/javascript" src="settings/functions.js"></script>
+<script src="settings/functions.js" type="text/javascript"></script>
 
 </body>
 
