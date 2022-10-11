@@ -8,24 +8,28 @@
     <title>New&nbsp;administrator&nbsp;account</title>
 </head>
 <body>
-<div class="header">
-    <h1>Administrator site</h1>
-    <h2>New&nbsp;administrator&nbsp;account</h2>
-</div>
-<div class="navbar">
-    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
-    <a href="adminsite.html">Reports</a>
-    <a href="newstudent.html">New student</a>
-    <a href="newcourse.html">New course</a>
-</div>
-<div class="content-section wf-section ">
+<div class="page-container">
+    <div class="header">
+        <h1>Administrator site</h1>
+        <h2>New&nbsp;administrator&nbsp;account</h2>
+    </div>
+    <div class="navbar">
+        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a href="adminsite.html">Reports</a>
+        <a class="active" href="newemployee.html">New employee</a>
+        <a href="newstudent.html">New student</a>
+        <a href="newcourse.html">New course</a>
+    </div>
+
+
     <div class="content-wrapper w-container ">
 
 
         <form action="BusinessLogic.php" method="post" target="_self">
-            <div class="row">
+            <div class="row card">
                 <div class="column">
                     <div class="form-group">
+
                         <input class="form-control" name="nename" placeholder="Name" required type="text">
                     </div>
                     <div class="form-group">
@@ -50,7 +54,10 @@
                         <input class="form-control" name="neprovince" placeholder="Province" required type="text">
                     </div>
 
+                    <button class="btn center-box" onclick="window.location.href='adminsite.html';">Cancel
+                    </button>
                 </div>
+
                 <div class="column">
                     <div class="form-group">
                         <input class="form-control" name="nepostalcode" pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]"
@@ -82,18 +89,21 @@
                                required
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                type="password">
+
                     </div>
 
-                    <input onclick="myFunction()" style="" type="checkbox">Show Password
+                    <input class="center-box" name="nesubmit" type="submit" value="Save">
 
                 </div>
             </div>
-            <input class="btn center-box" name="nesubmit" type="submit" value="Save">
-            <button class="btn center-box" onClick="window.location.href='adminsite.html';">Cancel</button>
         </form>
 
-
+        <footer class="footer">
+            test
+        </footer>
     </div>
 </div>
+
 <script src="settings/functions.js" type="text/javascript"></script>
 </body>
+</html>

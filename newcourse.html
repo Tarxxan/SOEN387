@@ -10,31 +10,30 @@
 
 </head>
 <body>
+<div class="page-container">
+
+    <div class="header">
+        <h1>Administrator site</h1>
+        <h2>New&nbsp;Course</h2>
+
+    </div>
 
 
-<div class="header">
-    <h1>Administrator site</h1>
-    <h2>New&nbsp;Course</h2>
+    <div class="navbar">
+        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a href="adminsite.html">Reports</a>
+        <a href="newemployee.html">New employee</a>
+        <a href="newstudent.html">New student</a>
+        <a class="active" href="newcourse.html">New course</a>
 
-</div>
-
-
-<div class="navbar">
-    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
-    <a href="adminsite.html">Reports</a>
-    <a href="newemployee.html">New employee</a>
-    <a href="newstudent.html">New student</a>
-
-</div>
+    </div>
 
 
-<div class="content-section wf-section">
     <div class="content-wrapper w-container">
 
-
         <form action="BusinessLogic.php" method="post" target="_self">
-            <div class="row">
-                <div class="side">
+            <div class="row card">
+                <div class="column">
 
                     <div class="form-group">
                         <input class="form-control" name="courseCode" placeholder="Course code" required type="text">
@@ -53,18 +52,23 @@
                         <input class="form-control" name="time" placeholder="Time"
                                required type="text">
                     </div>
-                    <div class="form-group">
-                        <input class="form-control" name="instructor" placeholder="Instructor" required type="text">
-                    </div>
+
                     <div class="form-group">
                         <input class="form-control" name="startDate" placeholder="Start Date" required type="date">
                     </div>
                     <div class="form-group">
                         <input class="form-control" name="endDate" placeholder="End date" required type="date">
                     </div>
+
+                    <button class="btn center-box" onclick="window.location.href='adminsite.html';">Cancel
+                    </button>
+
                 </div>
 
                 <div class=" column">
+                    <div class="form-group">
+                        <input class="form-control" name="instructor" placeholder="Instructor" required type="text">
+                    </div>
                     <div class="form-group">
                         <input class="form-control" name="room" placeholder="Room" required type="email">
                     </div>
@@ -78,18 +82,16 @@
                     </div>
 
 
-                    <div class="d-flex flex-row align-items-center justify-content-between">
-                        <input class="btn center-box" name="ncsubmit" onClick="saveconfirmation()" type="submit"
-                               value="Create course">
-                    </div>
+                    <input class="center-box" name="ncsubmit" onClick="saveconfirmation()" type="submit" value="save">
+
                 </div>
             </div>
         </form>
-        <button class="btn center-box " onclick="window.location.href='adminsite.html';">Cancel</button>
 
+        <footer class="footer">
+            test
+        </footer>
     </div>
 </div>
-
-
 </body>
 </html>

@@ -327,13 +327,13 @@ class BusinessLogic
         $stmt->execute();
         $result = $stmt->fetchAll();
         if (sizeof($result) > 0) {
-            echo "<table>";
+            echo "<table >";
             echo "<tr>";
-            echo "<th>'Course Code'</th>";
-            echo "<th>'Title'</th>";
-            echo "<th>'Instructor'</th>";
-            echo "<th>'Start Date'</th>";
-            echo "<th>'End Date'</th>";
+            echo "<th>Course Code</th>";
+            echo "<th>Title</th>";
+            echo "<th>Instructor</th>";
+            echo "<th>Start Date</th>";
+            echo "<th>End Date</th>";
             echo "</tr>";
 
             foreach ($result as $row) {

@@ -26,45 +26,21 @@ function comparepasswords() {
 }
 
 
-function myFunction() {
-    var ns = document.getElementById("nspassword");
-    var nsc = document.getElementById("nsconfirm-password")
-    var ne = document.getElementById("nepassword");
-    var nec = document.getElementById("neconfirm-password")
-
-    if (ns.type === "password") {
-        ns.type = "text";
-    } else {
-        ns.type = "password";
-    }
-    if (nsc.type === "password") {
-        nsc.type = "text";
-    } else {
-        nsc.type = "password";
-    }
-    if (ne.type === "password") {
-        ne.type = "text";
-    } else {
-        ne.type = "password";
-    }
-    if (nec.type === "password") {
-        nec.type = "text";
-    } else {
-        nec.type = "password";
-    }
-}
-
 // Get the iframe
 const iframe = document.getElementById('myIframeAdmin');
 // Reload the iframe
 iframe.contentWindow.location.reload()
 
-function saveconfirmation() {
 
-    var nc = document.getElementById("ncsubmit");
-    var ns = document.getElementById("nssubmit")
-    var ne = document.getElementById("nesubmit");
-    var nr = document.getElementById("submit");
-
-    alert("Saved");
-}
+document.getElementById("ncsubmit").addEventListener("click", function () {
+    alert("Saved!");
+});
+document.getElementById("nssubmit").addEventListener("click", function () {
+    alert("Saved!");
+});
+document.getElementById("nesubmit").addEventListener("click", function () {
+    alert("Saved!");
+});
+document.getElementById("submit").addEventListener("click", function () {
+    alert("Saved!");
+});

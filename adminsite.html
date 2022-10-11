@@ -6,37 +6,42 @@
     <link href="settings/reset.css" rel="stylesheet">
     <link href="settings/styles.css" rel="stylesheet"/>
     <link href="settings/formsstyles.css" rel="stylesheet"/>
-    <title>Administrator&nbsp;site</title>
+    <title>Administrator&nbsp;reports</title>
 </head>
 <body>
+<div class="page-container">
+    <div class="header">
+        <h1>Administrator site</h1>
+        <h2>Reports</h2>
+    </div>
 
-<div class="header">
-    <h1>Administrator site</h1>
-    <h2>Reports</h2>
+    <div class="navbar">
+        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a class="active" href="adminsite.html">Reports</a>
+        <a href="newemployee.html">New employee</a>
+        <a href="newstudent.html">New student</a>
+        <a href="newcourse.html">New course</a>
+    </div>
+
+
+    <div class="content-wrapper w-container">
+        <div class="row">
+            <p>Add something to select the report requested</p>
+        </div>
+
+        <iframe loading="lazy" name="myIframeAdmin" src="saveconfirmation.html"
+                style="border: none; position: relative;"
+                title="Report display window"
+                width="100%">
+        </iframe>
+
+    </div>
+
+    <script src="settings/functions.js" type="text/javascript"></script>
+    <footer class="footer">
+
+    </footer>
 </div>
-
-<div class="navbar">
-    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
-    <a href="adminsite.html">Reports</a>
-    <a href="newemployee.html">New employee</a>
-    <a href="newstudent.html">New student</a>
-    <a href="newcourse.html">New course</a>
-</div>
-
-
-<div class="center-box">
-    <p>Test for space</p>
-</div>
-
-
-<iframe loading="lazy" name="myIframeAdmin" src="saveconfirmation.html"
-        style="border: none; position: relative; "
-        title="Report display window"
->
-</iframe>
-
-
-<script src="settings/functions.js" type="text/javascript"></script>
 
 </body>
 

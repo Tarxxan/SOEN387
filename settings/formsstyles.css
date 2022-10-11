@@ -8,19 +8,35 @@ a:hover {
     text-decoration: none;
 }
 
+form {
+    display: block;
 
-.form-control {
-    position: center;
-    background-color: rgba(239, 236, 225, 0.8);
-    padding: 25px 15px;
-    margin-bottom: 1.3rem;
-    width: -moz-max-content;
-    align-self: center;
+    padding-right: 10%;
+    padding-left: 10%;
+
 
 }
 
+
+form div {
+
+    width: 100%;
+
+}
+
+
+.form-control {
+
+    background-color: rgba(239, 236, 225, 0.8);
+    padding: 25px 15px;
+    width: -moz-min-content;
+    align-self: stretch;
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .form-control:focus {
-    color: #2E2E22;
+
     background-color: transparent;
     border: 3px solid #1c3848;
     outline: 0;
@@ -28,51 +44,118 @@ a:hover {
 }
 
 .form-control:active {
-    color: #9aadc4;
+    color: rgba(239, 236, 225, 0.8);
     background-color: transparent;
     border: 3px solid #464146;
     outline: 0;
     box-shadow: none;
 }
 
-. div {
-    margin-bottom: 10px;
+.form-group {
+
+    margin: 3%;
+
 }
 
-.label {
-    display: inline-block;
-    width: 150px;
+label {
+    color: #1c3848;
+    background-color: transparent;
+    font-weight: bold;
+    font-weight: lighter;
+    font-size: medium;
+    display: flex;
+    align-items: center;
+
 }
 
-input {
-    padding: 5px 10px;
+
+label:after {
+    content: " "
+}
+
+input[type=text], select, textarea {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+
+}
+
+input[type=email] {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+input[type=password] {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+input[type=tel] {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+input[type=date] {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }
 
 
-.btn {
+input[type=submit] {
     height: 45px;
     font-size: 13px;
+    margin: 2%;
     border: 1px solid #1c3848;
     border-radius: 25px;
     background-color: transparent;
-    -webkit-transition: background-color 200ms ease, color 200ms ease;
-    transition: background-color 200ms ease, color 200ms ease;
     font-family: Roboto, sans-serif;
     line-height: 15px;
     text-align: center;
     letter-spacing: 2px;
+    padding: 12px 20px;
+    cursor: pointer;
 
 
 }
 
-.btn:hover {
-
-    background-color: rgba(180, 172, 179, 0.9);
+input[type="checkbox"] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.btn:active {
 
-    background-color: #9AADC4FF;
+input[type=submit]:hover {
+    background-color: rgb(57, 65, 84);
+    color: #F7F7F7;
+}
+
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
 }
 
 

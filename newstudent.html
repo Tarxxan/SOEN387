@@ -7,40 +7,44 @@
     <link href="settings/formsstyles.css" rel="stylesheet"/>
     <title>New&nbsp;student&nbsp;account</title>
 </head>
-
-
-<div class="header">
-    <h1>Administrator site</h1>
-    <h2>New&nbsp;student&nbsp;account</h2>
-    <h2></h2>
-</div>
-
 <body>
-<div class="navbar">
-    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
-    <a href="adminsite.html">Reports</a>
-    <a href="newemployee.html">New employee</a>
-    <a href="newcourse.html">New course</a>
-</div>
-<div class="content-section wf-section">
-    <div class="content-wrapper w-container">
+<div class="page-container">
+    <div class="header">
+        <h1>Administrator site</h1>
+        <h2>New&nbsp;student&nbsp;account</h2>
+        <h2></h2>
+    </div>
+
+    <div class="navbar">
+        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a href="adminsite.html">Reports</a>
+        <a href="newemployee.html">New employee</a>
+        <a class="active" href="newstudent.html">New student</a>
+        <a href="newcourse.html">New course</a>
+
+    </div>
+
+    <div class="content-wrapper w-container ">
+
 
         <form action="BusinessLogic.php" method="post" target="_self">
-            <div class="row">
-                <div class="side">
-
+            <div class="row card">
+                <div class="column">
                     <div class="form-group">
 
-                        <input class="form-control" name="nsname" placeholder="Name" required type="text">
+                        <label>
+                            <input class="form-control" name="nsname" placeholder="Name" required type="text">
+                        </label>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nslastname" placeholder="Last Name" required type="text">
+                        <label>
+                            <input class="form-control" name="nslastname" placeholder="Last Name" required type="text">
+                        </label>
                     </div>
                     <div class="form-group">
                         <input class="form-control" name="nstudentname" placeholder="Enter your employee name" required
                                type="text">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nsestreetnumber" pattern="[0-9]{1,5}"
                                placeholder="Street number" required
@@ -61,8 +65,9 @@
                         <input class="form-control" name="nspostalcode" pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]"
                                placeholder="Postal Code" required type="text">
                     </div>
+                    <button class="btn center-box" onclick="window.location.href='adminsite.html';">Cancel
+                    </button>
                 </div>
-
                 <div class=" column">
                     <div class="form-group">
                         <input class="form-control" name="nsemail" placeholder="Email" required type="email">
@@ -73,12 +78,10 @@
                                required
                                type="tel">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nsdateofbirth" placeholder="Date of birth" required
                                type="date">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nspassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                placeholder="Password"
@@ -86,7 +89,6 @@
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                type="password">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nsconfirm-password"
                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
@@ -96,18 +98,20 @@
                                type="password">
                     </div>
 
+                    <input class="center-box" name="nssubmit" type="submit" value="Save">
 
-                    <input onclick="myFunction()" style="font-size: 14px;" type="checkbox">Show Password
-
-                    <div class="d-flex flex-row align-items-center justify-content-between">
-                        <input class="btn center-box" name="nssubmit" type="submit" value="Save">
-                    </div>
 
                 </div>
             </div>
-            <button class="btn center-box" onClick="window.location.href='adminsite.html';">Cancel</button>
+
         </form>
 
+        <footer class="footer">
+            test
+        </footer>
     </div>
 </div>
+
+
+<script src="settings/functions.js" type="text/javascript"></script>
 </body>
