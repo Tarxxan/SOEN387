@@ -25,6 +25,9 @@ if(isset($_POST['ncsubmit'])){
 if(isset($_POST['sfsubmit'])){
     $bl->studentRegisterCourse();
 }
+if(isset($_POST['sdsubmit'])){
+    $bl->studentDropCourse();
+}
 
 class BusinessLogic
 {
@@ -79,7 +82,7 @@ class BusinessLogic
 
         else{
             if($this->student)
-                header("Location: registrationform.html");
+                header("Location: registrationform.php");
             else {
 
                 header("Location: newcourse.html");
@@ -201,80 +204,136 @@ class BusinessLogic
 
     }
 
-    public function studentRegisterCourse
+    public function studentRegisterCourse()
     {
-
-    }
-
-    public function StudentCourseOptions()
-    {
-        if ($this->db->failedConnection) {
-            die("Failed SQL connection");
-        }
         extract($_POST);
+        extract($_SESSION);
 
-        if ($courseOption=="Add"){
-            $stmt=$this->db->prepare("SELECT StartDate FROM courses WHERE courseCode=? and semester=? and ? between startDate and dateadd(week,1,startDate) and contact.numberOfCourses <5 and contact.id=xxx.id ");
-            $stmt->bind_param($courseCode,$semester,$startDate);
-            $stmt->execute();
-            if($stmt.get_result()->num_rows==0) {
-                return "Cannot add a course. Past the one week deadline";
-            }
-            else {
-                $stmt=$this->db->prepare("INSERT INTO XXX (courseCode,semester,instructor,studentId");
-                $stmt->bind_param($courseCode,$semester,$instructor,$stuId);
-                $stmt->execute();
-                $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses+1 where ID=? and userType='Student'");
-                $stmt->bind_param($stuId);
-                $stmt->execute();
-            }
+        $sql="SELECT courseCode FROM railway.enrollment WHERE courseCode=? AND studentID=?";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam(1,$addCourse);
+        $stmt->bindParam(2,$id);
+        $stmt->execute();
+        $inCourse=$stmt->fetchAll();
+
+        $sql="SELECT courseCode FROM railway.enrollment WHERE studentID=?";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam(1,$id);
+        $stmt->execute();
+        $courses=$stmt->fetchAll();
+
+        // CHECK IF COURSE ALREADY BELONGS TO THAT STUDENT
+        if(sizeof($courses)==5 || sizeof($inCourse)>0){
+            $_POST=null;
+            echo '<script type="text/javascript">
+                window.alert("Course cannot be added. You are already in 5 courses or are registered in this course");
+                window.location.href="registrationform.php"
+                </script>';
+            return;
         }
-        else {
-            $stmt=$this->db->prepare("SELECT endDate FROM courses WHERE courseCode=? and semester=? and ? before endDate and studentId=?");
-            $stmt->bind_param($courseCode,$semester,$startDate,$stuId);
-            $stmt->execute();
+        $sql="INSERT INTO railway.enrollment(enrollID,studentID,courseCode)VALUES(?,?,?)";
+        $stmt=$this->db->prepare($sql);
+        $ranEnrollID=rand(0,99999999);
+        $binds=array($ranEnrollID,$id,$addCourse);
+        $this->bindALl($stmt,$binds);
+        $stmt->execute();
 
-            if($stmt.get_result()->num_rows==0) {
-                return "Cannot drop the course.";
-            }
-
-            $stmt=$this->db->prepare("DELETE FROM XXX WHERE courseCode=? and semester=? and instructor=? and timeOfDay=? and studentId=?");
-            $stmt->bind_param($courseCode,$semester,$instructor,$timeOfDay,$stuId);
-            $stmt->execute();
-            $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses-1 where ID=? and userType='Student'");
-            $stmt->bind_param($stuId);
-            $stmt->execute();
-        }
+        header("location: registrationform.php");
     }
 
+    public function studentDropCourse(){
+        extract($_POST);
+        extract($_SESSION);
 
+        $sql="DELETE FROM railway.enrollment WHERE courseCode=? AND studentID=?";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam(1,$dropCourse);
+        $stmt->bindParam(2,$id);
+        try{
+            $stmt->execute();
+        } catch(PDOException $e){
+            echo '<script type="text/javascript">
+                window.alert("ERROR DROPPING THE COURSE");
+                window.location.href="newcourse.html"
+                $_POST=null;
+                </script>';
+        }
+        header("location: registrationform.php");
+    }
+
+//    public function StudentCourseOptions()
+//    {
+//        if ($this->db->failedConnection) {
+//            die("Failed SQL connection");
+//        }
+//        extract($_POST);
+//
+//        if ($courseOption=="Add"){
+//            $stmt=$this->db->prepare("SELECT StartDate FROM courses WHERE courseCode=? and semester=? and ? between startDate and dateadd(week,1,startDate) and contact.numberOfCourses <5 and contact.id=xxx.id ");
+//            $stmt->bind_param($courseCode,$semester,$startDate);
+//            $stmt->execute();
+//            if($stmt.get_result()->num_rows==0) {
+//                return "Cannot add a course. Past the one week deadline";
+//            }
+//            else {
+//                $stmt=$this->db->prepare("INSERT INTO XXX (courseCode,semester,instructor,studentId");
+//                $stmt->bind_param($courseCode,$semester,$instructor,$stuId);
+//                $stmt->execute();
+//                $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses+1 where ID=? and userType='Student'");
+//                $stmt->bind_param($stuId);
+//                $stmt->execute();
+//            }
+//        }
+//        else {
+//            $stmt=$this->db->prepare("SELECT endDate FROM courses WHERE courseCode=? and semester=? and ? before endDate and studentId=?");
+//            $stmt->bind_param($courseCode,$semester,$startDate,$stuId);
+//            $stmt->execute();
+//
+//            if($stmt.get_result()->num_rows==0) {
+//                return "Cannot drop the course.";
+//            }
+//
+//            $stmt=$this->db->prepare("DELETE FROM XXX WHERE courseCode=? and semester=? and instructor=? and timeOfDay=? and studentId=?");
+//            $stmt->bind_param($courseCode,$semester,$instructor,$timeOfDay,$stuId);
+//            $stmt->execute();
+//            $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses-1 where ID=? and userType='Student'");
+//            $stmt->bind_param($stuId);
+//            $stmt->execute();
+//        }
+//    }
 
     // Change to course params when we get the db
     public function displayCoursesTable(){
-        $sql="SELECT courseCode as 'Course Code' ,title as 'Title',instructor as 'Instructor',startDate as 'Start Date',endDate as 'End Date' ";
-        $stmt = $this->db->query($sql);
-        $result = $stmt->fetch_all(MYSQLI_ASSOC);
-        if ($result->num_rows() >0) {
+        extract($_SESSION);
+
+        $sql="SELECT courses.courseCode,title, instructor ,startDate ,endDate  FROM railway.courses 
+                    INNER JOIN railway.enrollment ON enrollment.courseCode= railway.courses.courseCode WHERE enrollment.studentID=?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(1,$id);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        if (sizeof($result)>0) {
             echo "<table>";
             echo "<tr>";
-                echo "<th>id</th>";
-                echo "<th>first_name</th>";
-                echo "<th>last_name</th>";
-                echo "<th>email</th>";
+                echo "<th>'Course Code'</th>";
+                echo "<th>'Title'</th>";
+                echo "<th>'Instructor'</th>";
+                echo "<th>'Start Date'</th>";
+                echo "<th>'End Date'</th>";
             echo "</tr>";
 
             foreach ($result as $row){
                 echo "<tr>";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['first_name'] . "</td>";
-                echo "<td>" . $row['last_name'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
+                echo "<td>" . $row['courseCode'] . "</td>";
+                echo "<td>" . $row['title'] . "</td>";
+                echo "<td>" . $row['instructor'] . "</td>";
+                echo "<td>" . $row['startDate'] . "</td>";
+                echo "<td>" . $row['endDate'] . "</td>";
                 echo "</tr>";
             }
             echo "</table>";
         }
     }
-
 
     public function displayCoursesDropdown()
     {
@@ -282,11 +341,21 @@ class BusinessLogic
         $stmt =$this->db->query($sql);
 
         while($row=$stmt->fetch()){
-            echo "<option value=".  $row['Course Code'].">".$row['Course Code']."</option>";
+            echo "<option value='".$row['Course Code']."'>".$row['Course Code']."</option>";
         }
-
-
     }
+
+    public function courseById(){
+        extract($_SESSION);
+        $sql="SELECT courseCode FROM railway.enrollment WHERE studentID=?";
+        $stmt =$this->db->prepare($sql);
+        $stmt->bindParam(1,$id);
+        $stmt->execute();
+        while($row=$stmt->fetch()){
+            echo "<option value='".$row['courseCode']."'>".$row['courseCode']."</option>";
+        }
+    }
+
     /** Either this redirects you to the page with just that report on it or we would need to use jquery but i dont think
     thats allowed yet so lets redirect to two diff pages. Or we can hide them with js and show when we click a button */
     public function displayReport($reportType){

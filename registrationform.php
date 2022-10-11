@@ -1,4 +1,6 @@
-
+  <?php
+            include "businessLogic.php";
+            $b=new BusinessLogic();?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
@@ -21,17 +23,26 @@
 <div>
     <label for="Courses">Courses</label>
     <form method="POST" action="BusinessLogic.php" target="_self">
-        <select name="Courses">
+        <select name="addCourse">
             <?php
-            include "businessLogic.php";
-            $b=new BusinessLogic();
             $b->displayCoursesDropdown();
             ?>
         </select>
-        <input type="submit" name="submit" value="sfsubmit"/>
-
+        <input type="submit" name="sfsubmit" value="Add Course"/>
     </form>
-
+    <form method="POST" action="BusinessLogic.php" target="_self">
+        <select name="dropCourse">
+            <?php
+           $b->courseById();
+            ?>
+        </select>
+        <input type="submit" name="sdsubmit" value="Drop Courses"/>    </form>
+</div>
+        <div>
+            <?php
+            $b->displayCoursesTable();
+            ?>
+        </div>
 </div>
 
 </body>
