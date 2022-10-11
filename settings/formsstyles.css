@@ -10,33 +10,49 @@ a:hover {
 
 
 .form-control {
+    position: center;
     background-color: rgba(239, 236, 225, 0.8);
     padding: 25px 15px;
     margin-bottom: 1.3rem;
     width: -moz-max-content;
     align-self: center;
+
 }
 
 .form-control:focus {
-    color: #000000;
-    background-color: rgba(239, 236, 225, 0.98);
-    border: 3px solid #464146;
+    color: #2E2E22;
+    background-color: transparent;
+    border: 3px solid #1c3848;
     outline: 0;
     box-shadow: none;
 }
 
 .form-control:active {
-    color: #000000;
-    background-color: rgba(239, 236, 225, 0.98);
+    color: #9aadc4;
+    background-color: transparent;
     border: 3px solid #464146;
     outline: 0;
     box-shadow: none;
 }
 
+. div {
+    margin-bottom: 10px;
+}
+
+.label {
+    display: inline-block;
+    width: 150px;
+}
+
+input {
+    padding: 5px 10px;
+}
+
+
 .btn {
     height: 45px;
     font-size: 13px;
-    border: 1px solid #301066;
+    border: 1px solid #1c3848;
     border-radius: 25px;
     background-color: transparent;
     -webkit-transition: background-color 200ms ease, color 200ms ease;
@@ -44,6 +60,8 @@ a:hover {
     font-family: Roboto, sans-serif;
     line-height: 15px;
     text-align: center;
+    letter-spacing: 2px;
+
 
 }
 
@@ -54,7 +72,7 @@ a:hover {
 
 .btn:active {
 
-    background-color: rgb(114, 97, 124);
+    background-color: #9AADC4FF;
 }
 
 
