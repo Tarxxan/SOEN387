@@ -8,12 +8,12 @@ $bl = new BusinessLogic();
 
 if (isset($_POST['nslogin']) || isset($_POST['nelogin'])) {
     $bl->checkLoginCredentials();
-
 }
 
 if (isset($_POST['nssubmit'])) {
     $bl->addNewStudent();
 }
+
 if (isset($_POST['nesubmit'])) {
     $bl->addNewEmployee();
 }
@@ -25,8 +25,13 @@ if (isset($_POST['ncsubmit'])) {
 if (isset($_POST['sfsubmit'])) {
     $bl->studentRegisterCourse();
 }
+
 if (isset($_POST['sdsubmit'])) {
     $bl->studentDropCourse();
+}
+
+if(isset($_POST['rssubmit'])||isset($_POST['rcsubmit']) ){
+    $bl->displayreports();
 }
 
 class BusinessLogic
@@ -86,7 +91,7 @@ class BusinessLogic
                 header("Location: registrationform.php");
             else {
 
-                header("Location: adminsite.html");
+                header("Location: adminsite.php");
             }
         }
     }
@@ -215,46 +220,25 @@ class BusinessLogic
 
     }
 
-//    public function StudentCourseOptions()
-//    {
-//        if ($this->db->failedConnection) {
-//            die("Failed SQL connection");
-//        }
-//        extract($_POST);
-//
-//        if ($courseOption=="Add"){
-//            $stmt=$this->db->prepare("SELECT StartDate FROM courses WHERE courseCode=? and semester=? and ? between startDate and dateadd(week,1,startDate) and contact.numberOfCourses <5 and contact.id=xxx.id ");
-//            $stmt->bind_param($courseCode,$semester,$startDate);
-//            $stmt->execute();
-//            if($stmt.get_result()->num_rows==0) {
-//                return "Cannot add a course. Past the one week deadline";
-//            }
-//            else {
-//                $stmt=$this->db->prepare("INSERT INTO XXX (courseCode,semester,instructor,studentId");
-//                $stmt->bind_param($courseCode,$semester,$instructor,$stuId);
-//                $stmt->execute();
-//                $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses+1 where ID=? and userType='Student'");
-//                $stmt->bind_param($stuId);
-//                $stmt->execute();
-//            }
-//        }
-//        else {
-//            $stmt=$this->db->prepare("SELECT endDate FROM courses WHERE courseCode=? and semester=? and ? before endDate and studentId=?");
-//            $stmt->bind_param($courseCode,$semester,$startDate,$stuId);
-//            $stmt->execute();
-//
-//            if($stmt.get_result()->num_rows==0) {
-//                return "Cannot drop the course.";
-//            }
-//
-//            $stmt=$this->db->prepare("DELETE FROM XXX WHERE courseCode=? and semester=? and instructor=? and timeOfDay=? and studentId=?");
-//            $stmt->bind_param($courseCode,$semester,$instructor,$timeOfDay,$stuId);
-//            $stmt->execute();
-//            $stmt=$this->db->prepare("UPDATE contacts SET numberOfCourses=numberOfCouses-1 where ID=? and userType='Student'");
-//            $stmt->bind_param($stuId);
-//            $stmt->execute();
-//        }
-//    }
+    public function displayreports()
+    {
+        extract($_POST);
+
+        // Displays all students taking a certain course
+        if (isset($rssubmit)) {
+            $sql = "SELECT studentID FROM railway.enrollment WHERE courseCode=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $courseToDisplay);
+            $stmt->execute();
+            $arr=$stmt->fetchAll();
+            $this->displayStudentsInCourse($arr,$courseToDisplay);
+
+        }
+        else{
+            $this->displayCoursesTable($studentCourse);
+        }
+
+    }
 
     // Change to course params when we get the db
 
@@ -316,16 +300,23 @@ class BusinessLogic
         header("location: registrationform.php");
     }
 
-    public function displayCoursesTable()
+    public function displayCoursesTable($adminReq=false)
     {
         extract($_SESSION);
 
         $sql = "SELECT courses.courseCode,title, instructor ,startDate ,endDate  FROM railway.courses 
                     INNER JOIN railway.enrollment ON enrollment.courseCode= railway.courses.courseCode WHERE enrollment.studentID=?";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $id);
+        if($adminReq){
+            $stmt->bindParam(1, $adminReq);
+        }
+        else {
+            $stmt->bindParam(1, $id);
+        }
+
         $stmt->execute();
         $result = $stmt->fetchAll();
+
         if (sizeof($result) > 0) {
             echo "<table >";
             echo "<tr>";
@@ -359,6 +350,18 @@ class BusinessLogic
         }
     }
 
+    public function displayStudentDropdown()
+    {
+        $sql = "SELECT DISTINCT studentID FROM railway.enrollment";
+        $stmt = $this->db->query($sql);
+
+        var_dump($stmt);
+        while ($row = $stmt->fetch()) {
+            echo $row['studentID'];
+            echo "<option value='" . $row['studentID'] . "'>" . $row['studentID'] . "</option>";
+        }
+    }
+
     public function courseById()
     {
         extract($_SESSION);
@@ -371,33 +374,19 @@ class BusinessLogic
         }
     }
 
-    /** Either this redirects you to the page with just that report on it or we would need to use jquery but i dont think
-     * thats allowed yet so lets redirect to two diff pages. Or we can hide them with js and show when we click a button */
-    public function displayReport($reportType)
+    public function displayStudentsInCourse($arr, $courseToDisplay)
     {
-        if ($reportType == "courses") {
-            $sql = "";
-        } else {
-            $sql = "";
-        }
-        $stmt = $this->db->query($sql);
-        $result = $stmt->fetch_all(MYSQLI_ASSOC);
-
-        if ($result->num_rows() > 0) {
-            echo "<table>";
+        if (sizeof($arr) > 0) {
+            echo "<table >";
             echo "<tr>";
-            echo "<th>id</th>";
-            echo "<th>first_name</th>";
-            echo "<th>last_name</th>";
-            echo "<th>email</th>";
+            echo "<th>Course</th>";
+            echo "<th>Student ID</th>";
             echo "</tr>";
 
-            foreach ($result as $row) {
+            foreach ($arr as $row) {
                 echo "<tr>";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['first_name'] . "</td>";
-                echo "<td>" . $row['last_name'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
+                echo "<td>" . $row['studentID'] . "</td>";
+                echo "<td>" . $courseToDisplay. "</td>";
                 echo "</tr>";
             }
             echo "</table>";

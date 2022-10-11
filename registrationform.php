@@ -1,6 +1,7 @@
 <?php
 include "businessLogic.php";
 $b = new BusinessLogic(); ?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
@@ -44,12 +45,9 @@ $b = new BusinessLogic(); ?>
                 </form>
 
             </div>
-
             <div class="column">
                 <form method="POST" action="BusinessLogic.php" target="_self">
                     <div class="form-group">
-
-
                         <label for="dropCourse" class="center-box">Drop</label>
                         <select id="dropCourse" name="dropCourse">
                             <?php
@@ -64,7 +62,6 @@ $b = new BusinessLogic(); ?>
         </div>
 
         <div class="row">
-
             <?php
             $b->displayCoursesTable();
             ?>
