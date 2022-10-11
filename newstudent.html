@@ -1,98 +1,101 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html dir="ltr" lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="settings/reset.css">
-    <link rel="stylesheet" href="settings/styles.css"/>
-    <link rel="stylesheet" href="settings/formsstyles.css"/>
+    <link href="settings/reset.css" rel="stylesheet">
+    <link href="settings/styles.css" rel="stylesheet"/>
+    <link href="settings/formsstyles.css" rel="stylesheet"/>
     <title>New&nbsp;student&nbsp;account</title>
 </head>
 <body>
 
-<div class="header">
-
-    <h2>Register new student information</h2>
-    <h2></h2>
-</div>
-<div class="navbar">
-    <a href="home.html">Home</a>
-</div>
-
-<div class="container">
-
-    <form action="BusinessLogic.php" method="POST" target="_self">
-        <div class="row">
-            <div class="side">
+<div class="content-section wf-section">
+    <div class="content-wrapper w-container">
 
 
-                <div class="form-group">
+        <form action="BusinessLogic.php" method="post" target="_self">
+            <div class="row">
+                <div class="side">
 
-                    <input class="form-control" name="nsname" placeholder="Name" required type="text">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nslastname" required placeholder="Last Name">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nstudentname" required
-                           placeholder="Enter your employee name">
+                    <div class="form-group">
+
+                        <input class="form-control" name="nsname" placeholder="Name" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nslastname" placeholder="Last Name" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nstudentname" placeholder="Enter your employee name" required
+                               type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" name="nsestreetnumber" pattern="[0-9]{1,5}"
+                               placeholder="Street number" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nsstreetname" pattern="[0-9]{1,5}" placeholder="Street name"
+                               required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nscity" placeholder="City" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nsprovince" placeholder="Province" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nspostalcode" pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]"
+                               placeholder="Postal Code" required type="text">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nsestreetnumber" pattern="[0-9]{1,5}" required
-                           placeholder="Street number">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nsstreetname" pattern="[0-9]{1,5}" required
-                           placeholder="Street name">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nscity" required placeholder="City">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nsprovince" required placeholder="Province">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="nspostalcode"
-                           pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]" required placeholder="Postal Code">
+                <div class=" main">
+                    <div class="form-group">
+                        <input class="form-control" name="nsemail" placeholder="Email" required type="email">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nphone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                               placeholder="Phone number"
+                               required
+                               type="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" name="nsdateofbirth" placeholder="Date of birth" required
+                               type="date">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" name="nspassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                               placeholder="Password"
+                               required
+                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                               type="password">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" name="nsconfirm-password"
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                               placeholder="confirm-password"
+                               required
+                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                               type="password">
+                    </div>
+
+
+                    <input onclick="myFunction()" type="checkbox">Show Password
+
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+                        <input class="btn center-box" name="nssubmit" type="submit" value="Save">
+                    </div>
+
                 </div>
             </div>
+            <button class="btn center-box" onClick="window.location.href='adminsite.html';">Cancel</button>
+        </form>
 
-            <div class=" main">
-                <div class="form-group">
-                    <input type="email" class="form-control" name="nsemail" required placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <input type="tel" class="form-control" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="nphone" required
-                           placeholder="Phone number">
-                </div>
-
-                <div class="form-group">
-                    <input type="date" class="form-control" required placeholder="Date of birth" name="nsdateofbirth">
-                </div>
-
-                <div class="form-group">
-                    <input type="password" class="form-control" name="nspassword"
-                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                           required placeholder="Password">
-                </div>
-
-                <div class="form-group">
-                    <input type="password" class="form-control" name="nsconfirm-password"
-                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                           required placeholder="confirm-password">
-                </div>
-                <div class="d-flex flex-row align-items-center justify-content-between">
-
-    <button class="btn center-box " onClick="window.location.href='studentlogin.html';">Cancel</button>
-                </div>
-            </div>
-        </div>
-                    <input class="btn center-box" type="submit" value="Login" name="nssubmit" onclick="processLogin()">
-    </form>
-
-
-</div>
+    </div>
 </div>
 </body>
