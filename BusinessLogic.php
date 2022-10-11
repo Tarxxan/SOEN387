@@ -1,10 +1,14 @@
-
 <?php
 include "database.php";
+session_start();
+error_reporting(E_ALL ^ E_NOTICE);
+
 $bl = new BusinessLogic();
+
 
 if(isset($_POST['nslogin']) || isset($_POST['nelogin'])) {
     $bl->checkLoginCredentials();
+
 }
 
 if(isset($_POST['nssubmit'])){
@@ -14,6 +18,13 @@ if(isset($_POST['nesubmit'])){
     $bl->addNewEmployee();
 }
 
+if(isset($_POST['ncsubmit'])){
+    $bl->adminAddCourse();
+}
+
+if(isset($_POST['sfsubmit'])){
+    $bl->studentRegisterCourse();
+}
 
 class BusinessLogic
 {
@@ -41,6 +52,7 @@ class BusinessLogic
             $stmt = $this->db->prepare("Select studentID FROM railway.student WHERE studentID=?");
             $stmt->bindParam(1, $studentid);
             $stmt->execute();
+            $_SESSION['id']=$studentid;
         }
 
         else {
@@ -48,6 +60,7 @@ class BusinessLogic
             $stmt->bindParam(1,$employeeid);
             $stmt->execute();
             $this->student = false;
+            $_SESSION['id']=$employeeid;
         }
 
         // Returns an associative array or false. Hence the !result== no results found in the database
@@ -61,14 +74,15 @@ class BusinessLogic
         elseif (!$result && !($this->bl->student) && isset($employeeid)) {
             echo '<script type="text/javascript">
             window.alert("Contact HR to make an admin acconut");
-            window.location.href="adminlogin.html"</script>';
+            window.location.href="home.html"</script>';
         }
 
         else{
             if($this->student)
                 header("Location: registrationform.html");
             else {
-                header("Location: reports.html");
+
+                header("Location: newcourse.html");
             }
         }
     }
@@ -154,23 +168,51 @@ class BusinessLogic
         header("location: reports.html");
     }
 
+    public function adminAddCourse(){
+
+        extract($_POST);
+        extract($_SESSION);
+
+        $comp=strcmp($_POST['startDate'],$_POST['endDate']);
+
+        if($comp==0 || $comp >0){
+            echo '<script type="text/javascript">
+                window.alert("Start and End dates are incorrect, please verify before re-submitting");
+                window.location.href="newcourse.html"
+                $_POST=null;
+                </script>';
+        }
+
+        $sql="INSERT INTO railway.courses(courseCode,title,semester,days,time,instructor,classroom,startDate,endDate,createdBy)
+        VALUES(?,?,?,?,?,?,?,?,?,?)";
+        $stmt =$this->db->prepare($sql);
+        $binds=array($courseCode,$courseTitle,$semester,$days,$time,$instructor,$room,$startDate,$endDate,$id);
+        $stmt= $this->bindAll($stmt,$binds);
+        try {
+            $stmt->execute();
+        }
+        catch(PDOException $e) {
+            echo '<script type="text/javascript">
+                window.alert("Course code already exist, try another one");
+                window.location.href="newcourse.html"
+                </script>';
+        }
+        header("location: newcourse.html");
+
+    }
+
+    public function studentRegisterCourse
+    {
+
+    }
+
     public function StudentCourseOptions()
     {
         if ($this->db->failedConnection) {
             die("Failed SQL connection");
         }
         extract($_POST);
-        /**
-        $courseOption=$_POST['courseOption'] ?? false;
-        $stuId = $_POST['stuId'] ?? false;
-        $courseCode = $_POST['courseCode'] ?? false;
-        $semester = $_POST['semester'] ?? false;
-        $days= $_POST['days'] ?? false;
-        $timeOfDay = $_POST['time'] ?? false;
-        $instructor = $_POST['instructor'] ?? false;
-        $startDate = $_POST['startDate'] ?? false;
-        $endDate = $_POST['endDate'] ?? false;
-         **/
+
         if ($courseOption=="Add"){
             $stmt=$this->db->prepare("SELECT StartDate FROM courses WHERE courseCode=? and semester=? and ? between startDate and dateadd(week,1,startDate) and contact.numberOfCourses <5 and contact.id=xxx.id ");
             $stmt->bind_param($courseCode,$semester,$startDate);
@@ -205,36 +247,12 @@ class BusinessLogic
         }
     }
 
-    public function adminAddCourse(){
 
-        if ($this->db->failedConnection) {
-            die("Failed SQL connection");
-        }
-
-        $courseCode = $_POST['courseCode'] ?? false;
-        $courseTitle = $_POST['courseTitle'] ?? false;
-        $semester = $_POST['semester'] ?? false;
-        $days= $_POST['days'] ?? false;
-        $timeOfDay = $_POST['time'] ?? false;
-        $instructor = $_POST['instructor'] ?? false;
-        $startDate = $_POST['startDate'] ?? false;
-        $endDate = $_POST['endDate'] ?? false;
-        $room = $_POST['room'] ?? false;
-        $language = $_POST['language'] ?? false;
-        $langLevel = $_POST['langLevel'] ?? false;
-
-        $sql="INSERT INTO courses(CourseID,CourseTitle,semester,days,timeOfDay,instructor,room,startDate,endDate,Language,LangLevel)
-        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-        $stmt =$this->db->prepare($sql);
-        $stmt->bind_params($courseCode,$courseTitle,$semester,$days,$timeOfDay,$instructor,$room,$startDate,$endDate,$language,$langLevel);
-        $stmt->execute();
-
-    }
 
     // Change to course params when we get the db
     public function displayCoursesTable(){
-        $sql="";
-        $stmt =$this->db->query($sql);
+        $sql="SELECT courseCode as 'Course Code' ,title as 'Title',instructor as 'Instructor',startDate as 'Start Date',endDate as 'End Date' ";
+        $stmt = $this->db->query($sql);
         $result = $stmt->fetch_all(MYSQLI_ASSOC);
         if ($result->num_rows() >0) {
             echo "<table>";
@@ -257,6 +275,18 @@ class BusinessLogic
         }
     }
 
+
+    public function displayCoursesDropdown()
+    {
+        $sql="SELECT courseCode as 'Course Code' FROM railway.courses";
+        $stmt =$this->db->query($sql);
+
+        while($row=$stmt->fetch()){
+            echo "<option value=".  $row['Course Code'].">".$row['Course Code']."</option>";
+        }
+
+
+    }
     /** Either this redirects you to the page with just that report on it or we would need to use jquery but i dont think
     thats allowed yet so lets redirect to two diff pages. Or we can hide them with js and show when we click a button */
     public function displayReport($reportType){
@@ -296,6 +326,7 @@ class BusinessLogic
         }
         return $stmt;
     }
+
     public function dbInit()
     {
         $db = new database();
