@@ -53,3 +53,18 @@ function myFunction() {
         nec.type = "password";
     }
 }
+
+// Get the iframe
+const iframe = document.getElementById('myIframeAdmin');
+// Reload the iframe
+iframe.contentWindow.location.reload()
+
+function saveconfirmation() {
+
+    var nc = document.getElementById("ncsubmit");
+    var ns = document.getElementById("nssubmit")
+    var ne = document.getElementById("nesubmit");
+    var nr = document.getElementById("submit");
+
+    alert("Saved");
+}

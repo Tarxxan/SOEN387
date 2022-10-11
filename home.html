@@ -20,25 +20,28 @@
 
 </div>
 
-<div class="content-section wf-section">
-    <div class="content-wrapper w-container">
+<div class="content-wrapper ">
+    <div class="row ">
 
 
-        <h1>Student</h1>
+        <div class="column">
 
-        <br><br>
+            <h1>Student</h1>
 
-        <span>If you are a student, login to the student course registration page and sign in to your account with your student ID and your password</span>
-        <br><br>
+            <br><br>
 
-        <form action="BusinessLogic.php" method="post">
+            <span>If you are a student, login to the student course registration page and sign in to your account with your student ID and your password</span>
+            <br><br>
 
-            <div class="form-group">
+            <form action="BusinessLogic.php" method="post">
+
+
                 <label for="studentid"> Student ID</label>
                 <input class="form-control" id="studentid" name="studentid" pattern="^\w{8}"
                        placeholder="Student ID" required
                        type="text">
                 <br>
+
                 <label for="studentpassword"> Password</label>
                 <input class="form-control" id="studentpassword" name="spassword"
                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
@@ -46,32 +49,29 @@
                        required
                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                        type="password">
-            </div>
+                <input class="btn center-box " name="nslogin" onclick="processLogin()" type="submit"
+                       value="Login">
+
+            </form>
+        </div>
 
 
-            <input class="btn center-box " name="nslogin" onclick="processLogin()" type="submit"
-                   value="Login">
+        <div class="column ">
 
-        </form>
 
-    </div>
-    <div class="content-wrapper w-container">
+            <h1>Administrator</h1>
+            <br><br>
 
-        <h1>Administrator</h1>
-        <br><br>
+            <span>If you are as administrator, login to the employee course registration page and sign in to your account with your employee ID and your password</span>
+            <br><br>
 
-        <span>If you are as administrator, login to the employee course registration page and sign in to your account with your employee ID and your password</span>
-        <br><br>
+            <form action="BusinessLogic.php" method="POST" target="_self">
 
-        <form action="BusinessLogic.php" method="POST" target="_self">
-
-            <div class="form-group">
                 <label for="employeeid"> Administrator ID</label>
                 <input class="form-control " id="employeeid" name="employeeid" pattern="^\w{8}"
                        placeholder="Employee ID" required
                        type="text">
                 <br>
-
 
                 <label for="employeepassword">Password</label>
                 <input class="form-control " id="employeepassword" name="epassword"
@@ -80,17 +80,16 @@
                        required
                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                        type="password">
-            </div>
 
-            <input class="btn center-box" name="nelogin" onclick="processLogin()" type="submit"
-                   value="Login">
+                <input class="btn center-box" name="nelogin" onclick="processLogin()" type="submit"
+                       value="Login">
 
 
-        </form>
+            </form>
+        </div>
+
     </div>
-
 </div>
-
 
 </body>
 

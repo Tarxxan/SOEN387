@@ -5,18 +5,28 @@
     <link href="settings/reset.css" rel="stylesheet">
     <link href="settings/styles.css" rel="stylesheet"/>
     <link href="settings/formsstyles.css" rel="stylesheet"/>
-    <title>New&nbsp;employee&nbsp;account</title>
+    <title>New&nbsp;administrator&nbsp;account</title>
 </head>
 <body>
+<div class="header">
+    <h1>Administrator site</h1>
+    <h2>New&nbsp;administrator&nbsp;account</h2>
+    <h2></h2>
+</div>
+<div class="navbar">
+    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+    <a href="adminsite.html">Reports</a>
+    <a href="newstudent.html">New student</a>
+    <a href="newcourse.html">New course</a>
 
-
-<div class="content-section wf-section">
-    <div class="content-wrapper w-container">
+</div>
+<div class="content-section wf-section ">
+    <div class="content-wrapper w-container ">
 
 
         <form action="BusinessLogic.php" method="post" target="_self">
             <div class="row">
-                <div class="side">
+                <div class="column">
                     <div class="form-group">
                         <input class="form-control" name="nename" placeholder="Name" required type="text">
                     </div>
@@ -27,7 +37,6 @@
                         <input class="form-control" name="nemployeeid" placeholder="Enter your employee ID" required
                                type="text">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="neestreetnumber" pattern="[0-9]{1,5}"
                                placeholder="Street number" required
@@ -42,13 +51,13 @@
                     <div class="form-group">
                         <input class="form-control" name="neprovince" placeholder="Province" required type="text">
                     </div>
+
+                </div>
+                <div class="column">
                     <div class="form-group">
                         <input class="form-control" name="nepostalcode" pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]"
                                placeholder="Postal Code" required type="text">
                     </div>
-                </div>
-
-                <div class="main">
                     <div class="form-group">
                         <input class="form-control" name="nemail" placeholder="Email" required type="email">
                     </div>
@@ -57,12 +66,10 @@
                                placeholder="Phone number"
                                required type="tel">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nedateofbirth" placeholder="Date of birth" required
                                type="date">
                     </div>
-
                     <div class="form-group">
                         <input class="form-control" name="nepassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                placeholder="Password"
@@ -79,14 +86,11 @@
                                type="password">
                     </div>
 
-                    <input onclick="myFunction()" type="checkbox">Show Password
-
-                    <div class="d-flex flex-row align-items-center justify-content-between">
-                        <input class="btn center-box" name="nesubmit" type="submit" value="Save">
-                    </div>
+                    <input onclick="myFunction()" style="" type="checkbox">Show Password
 
                 </div>
             </div>
+            <input class="btn center-box" name="nesubmit" type="submit" value="Save">
             <button class="btn center-box" onClick="window.location.href='adminsite.html';">Cancel</button>
         </form>
 

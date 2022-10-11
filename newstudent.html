@@ -7,11 +7,24 @@
     <link href="settings/formsstyles.css" rel="stylesheet"/>
     <title>New&nbsp;student&nbsp;account</title>
 </head>
-<body>
 
+
+<div class="header">
+    <h1>Administrator site</h1>
+    <h2>New&nbsp;student&nbsp;account</h2>
+    <h2></h2>
+</div>
+
+<body>
+<div class="navbar">
+    <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+    <a href="adminsite.html">Reports</a>
+    <a href="newemployee.html">New employee</a>
+    <a href="newcourse.html">New course</a>
+
+</div>
 <div class="content-section wf-section">
     <div class="content-wrapper w-container">
-
 
         <form action="BusinessLogic.php" method="post" target="_self">
             <div class="row">
@@ -51,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class=" main">
+                <div class=" column">
                     <div class="form-group">
                         <input class="form-control" name="nsemail" placeholder="Email" required type="email">
                     </div>
