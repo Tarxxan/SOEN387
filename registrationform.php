@@ -15,9 +15,8 @@ $b = new BusinessLogic();
 <body>
 <div class="page-container">
     <div class="header">
-        <h1>Student site</h1>
         <h1>Course enrollment</h1>
-        <?php echo $b->createID();?>
+       <h2>  <?php echo $b->createID();?></h2>
     </div>
 
     <div class="navbar">
@@ -63,7 +62,7 @@ $b = new BusinessLogic();
             </div>
         </div>
 
-        <div class="row">
+        <div >
             <?php
             $b->displayCoursesTable();
             ?>

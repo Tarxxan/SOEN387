@@ -1,12 +1,13 @@
+<link href="settings/styles.css" rel="stylesheet"/>
 <?php
 include "database.php";
+
 session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 
 $bl = new BusinessLogic();
 
-
-if (isset($_POST['nslogin']) || isset($_POST['nelogin'])) {
+if (isset($_POST['slogin']) || isset($_POST['elogin'])) {
     $bl->checkLoginCredentials();
 }
 
@@ -78,7 +79,7 @@ class BusinessLogic
         if (!$result && $this->student) {
             echo '<script type="text/javascript">
                 window.alert("Invalid ID/Password combination try again");
-                window.location.href="newemployee.html"
+                window.location.href="home.html"
                 </script>';
 
         } elseif (!$result && !($this->bl->student) && isset($employeeid)) {
@@ -133,7 +134,7 @@ class BusinessLogic
         $stmt->execute();
 
         // REDIRECT PAGE TO CREATE A REPORT OR TO ADD COURSES( CAROLINA)
-        header("location: adminsite.html");
+        header("location: adminsite.php");
 
     }
 
@@ -383,8 +384,8 @@ class BusinessLogic
 
             foreach ($arr as $row) {
                 echo "<tr>";
-                echo "<td>" . $row['studentID'] . "</td>";
                 echo "<td>" . $courseToDisplay. "</td>";
+                echo "<td>" . $row['studentID'] . "</td>";
                 echo "</tr>";
             }
             echo "</table>";

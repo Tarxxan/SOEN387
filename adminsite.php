@@ -20,7 +20,7 @@ $b = new BusinessLogic(); ?>
 
     <div class="navbar">
         <a class="right" href="home.html" onclick="processLogout()">Logout</a>
-        <a class="active" href="adminsite.html">Reports</a>
+        <a class="active" href="adminsite.php">Reports</a>
         <a href="newemployee.html">New employee</a>
         <a href="newstudent.html">New student</a>
         <a href="newcourse.html">New course</a>
@@ -28,10 +28,11 @@ $b = new BusinessLogic(); ?>
 
 
     <div class="content-wrapper w-container">
-        <div class="row">
-            <form method="POST" action="BusinessLogic.php" target="myIframeAdmin">
+        <div class="row card">
+            <div class="column ">
+            <form  method="POST" action="BusinessLogic.php" target="myIframeAdmin">
                 <div class="form-group">
-                    <label for="courses" class="center-box">Students in course</label>
+                    <label for="courses" >Course&nbsp;participants</label>
                     <select id="addCourse" name="courseToDisplay">
                         <?php
                         $b->displayCoursesDropdown();
@@ -40,10 +41,11 @@ $b = new BusinessLogic(); ?>
                 </div>
                 <input type="submit" name="rssubmit" value="Students in course"/>
             </form>
-
+            </div>
+            <div class="column ">
             <form method="POST" action="BusinessLogic.php" target="myIframeAdmin">
                 <div class="form-group">
-                    <label for="courses" class="center-box">Courses Taken by Student</label>
+                    <label for="courses">Student&nbsp;course&nbsp;load</label>
                     <select id="studentCourse" name="studentCourse">
                         <?php
                         $b->displayStudentDropdown();
@@ -52,14 +54,15 @@ $b = new BusinessLogic(); ?>
                 </div>
                 <input type="submit" name="rcsubmit" value="Courses taken by student"/>
             </form>
+            </div>
+
         </div>
-
+<div class="row">
         <iframe loading="lazy" name="myIframeAdmin"
-                style="border: none; position: relative;"
                 title="Report display window"
-                width="100%">
+                width="100%" src="iframedefault.html">
         </iframe>
-
+</div>
     </div>
 
     <script src="settings/functions.js" type="text/javascript"></script>
