@@ -134,7 +134,7 @@ class BusinessLogic
         $stmt->execute();
 
         // REDIRECT PAGE TO CREATE A REPORT OR TO ADD COURSES( CAROLINA)
-        header("location: adminsite.php");
+      //  header("location: adminsite.php");
 
     }
 
@@ -183,7 +183,7 @@ class BusinessLogic
         $stmt->execute();
 
         // REDIRECT PAGE TO CREATE ADD COURSES( CAROLINA)
-        header("location: reports.php");
+        //header("location: reports.php");
     }
 
     public function adminAddCourse()
@@ -215,7 +215,7 @@ class BusinessLogic
                 window.location.href="newcourse.html"
                 </script>';
         }
-        header("location: newcourse.html");
+        //header("location: newcourse.html");
 
     }
 

@@ -35,10 +35,7 @@
                     <div class="form-group">
                         <input class="form-control" name="nelastname" placeholder="Last Name" required type="text">
                     </div>
-                    <div class="form-group">
-                        <input class="form-control" name="nemployeeid" placeholder="Enter your employee ID" required
-                               type="text">
-                    </div>
+
                     <div class="form-group">
                         <input class="form-control" name="neestreetnumber" pattern="[0-9]{1,5}"
                                placeholder="Street number" required
@@ -60,7 +57,7 @@
 
                 <div class="column">
                     <div class="form-group">
-                        <input class="form-control" name="nepostalcode" pattern="[A-Z][1-9][A-Z] [1-9][A-Z][1-9]"
+                        <input class="form-control" name="nepostalcode" pattern="^[A-Z][1-9][a-zA-Z]\s{1}[1-9][A-Z][1-9]$"
                                placeholder="Postal Code" required type="text">
                     </div>
                     <div class="form-group">
