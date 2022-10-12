@@ -55,12 +55,7 @@ class BusinessLogic
     public function checkLoginCredentials()
     {
         extract($_POST);
-        // Need to tweak this and the db connection
-//        if ($this->db->failedConnection) {
-//            http_response_code(500);
-//            include('Error500.php'); // provide your own HTML for the error page
-//            die();
-//        }
+
 
         // Checks the database for a matching ID in the corresponding tables.
         if ($studentid) {
@@ -81,7 +76,11 @@ class BusinessLogic
 
         //Redirection checks for both students and admins
         if (!$result && $this->student) {
-            header("location: newstudent.html");
+            echo '<script type="text/javascript">
+                window.alert("Invalid ID/Password combination try again");
+                window.location.href="newemployee.html"
+                </script>';
+
         } elseif (!$result && !($this->bl->student) && isset($employeeid)) {
             echo '<script type="text/javascript">
             window.alert("Contact HR to make an admin account");
@@ -90,7 +89,6 @@ class BusinessLogic
             if ($this->student)
                 header("Location: registrationform.php");
             else {
-
                 header("Location: adminsite.php");
             }
         }
@@ -166,7 +164,7 @@ class BusinessLogic
         if ($result) {
             echo '<script type="text/javascript">
                 window.alert("ID is already taken,please try again with a different ID.");
-                window.location.href="newemployee.html"
+                window.location.href="newstudent.html"
                 </script>';
         }
 
