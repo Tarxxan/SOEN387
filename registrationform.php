@@ -1,6 +1,7 @@
 <?php
 include "businessLogic.php";
-$b = new BusinessLogic(); ?>
+$b = new BusinessLogic();
+?>
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -15,7 +16,8 @@ $b = new BusinessLogic(); ?>
 <div class="page-container">
     <div class="header">
         <h1>Student site</h1>
-        <h2>Course enrollment</h2>
+        <h1>Course enrollment</h1>
+        <?php echo $b->createID();?>
     </div>
 
     <div class="navbar">

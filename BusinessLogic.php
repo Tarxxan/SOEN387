@@ -184,7 +184,7 @@ class BusinessLogic
         $stmt->execute();
 
         // REDIRECT PAGE TO CREATE ADD COURSES( CAROLINA)
-        header("location: reports.html");
+        header("location: reports.php");
     }
 
     public function adminAddCourse()
@@ -391,5 +391,15 @@ class BusinessLogic
             }
             echo "</table>";
         }
+    }
+
+    public function createID(){
+        extract($_SESSION);
+        $sql = "SELECT CONCAT(person.firstName,' ',person.lastName) as name FROM railway.enrollment INNER JOIN railway.person ON person.personalID=enrollment.studentID WHERE studentID=?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        echo "<h2>".$result['name']."</h2>";
     }
 }
