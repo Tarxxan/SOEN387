@@ -16,6 +16,7 @@ $b = new BusinessLogic(); ?>
     <div class="header">
         <h1>Administrator site</h1>
         <h2>Reports</h2>
+        <h2>  <?php echo $b->createID();?></h2>
     </div>
 
     <div class="navbar">

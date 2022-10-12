@@ -225,7 +225,9 @@ class BusinessLogic
 
         // Displays all students taking a certain course
         if (isset($rssubmit)) {
-            $sql = "SELECT studentID FROM railway.enrollment WHERE courseCode=?";
+            $sql = "SELECT studentID, CONCAT(person.firstName,' ',person.lastName) as name ,title FROM railway.enrollment 
+                    INNER JOIN railway.person ON person.personalID=enrollment.studentID
+                    INNER JOIN railway.courses ON enrollment.courseCode=courses.courseCode WHERE enrollment.courseCode=?";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(1, $courseToDisplay);
             $stmt->execute();
@@ -246,18 +248,19 @@ class BusinessLogic
         extract($_POST);
         extract($_SESSION);
 
-        $sql = "SELECT courseCode FROM railway.enrollment WHERE courseCode=? AND studentID=?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $addCourse);
-        $stmt->bindParam(2, $id);
-        $stmt->execute();
-        $inCourse = $stmt->fetchAll();
-
         $sql = "SELECT courseCode FROM railway.enrollment WHERE studentID=?";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $id);
+        $binds=array($id);
+        $stmt=$this->bindALl($stmt, $binds);
         $stmt->execute();
         $courses = $stmt->fetchAll();
+
+        $sql.=" and courseCode=?";
+        $stmt = $this->db->prepare($sql);
+        $binds[] = $addCourse;
+        $stmt=$this->bindALl($stmt, $binds);
+        $stmt->execute();
+        $inCourse = $stmt->fetchAll();
 
         // CHECK IF COURSE ALREADY BELONGS TO THAT STUDENT
         if (sizeof($courses) == 5 || sizeof($inCourse) > 0) {
@@ -268,14 +271,33 @@ class BusinessLogic
                 </script>';
             return;
         }
-        $sql = "INSERT INTO railway.enrollment(enrollID,studentID,courseCode)VALUES(?,?,?)";
-        $stmt = $this->db->prepare($sql);
-        $ranEnrollID = rand(0, 99999999);
-        $binds = array($ranEnrollID, $id, $addCourse);
-        $this->bindALl($stmt, $binds);
-        $stmt->execute();
 
-        header("location: registrationform.php");
+        $sql = "SELECT courses.courseCode FROM railway.courses
+                WHERE courses.courseCode =? and CURRENT_DATE < DATE_ADD(courses.startDate, INTERVAL 1 WEEK)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(1,$addCourse);
+        try{
+            $stmt->execute();
+        }
+       catch(PDOException $e){
+            echo $e;
+       }
+       $courses = $stmt->fetchAll();
+        if(sizeof($courses)>0){
+            $sql = "INSERT INTO railway.enrollment(enrollID,studentID,courseCode)VALUES(?,?,?)";
+            $stmt = $this->db->prepare($sql);
+            $ranEnrollID = rand(0, 99999999);
+            $binds = array($ranEnrollID, $id, $addCourse);
+            $this->bindALl($stmt, $binds);
+            $stmt->execute();
+        }
+
+        else {
+            echo '<script type="text/javascript">
+                window.alert("Course Add date has passed");
+                window.location.href="registrationform.php"
+                </script>';
+        }
     }
 
     public function studentDropCourse()
@@ -283,20 +305,36 @@ class BusinessLogic
         extract($_POST);
         extract($_SESSION);
 
-        $sql = "DELETE FROM railway.enrollment WHERE courseCode=? AND studentID=?";
+        $sql="SELECT courses.courseCode from railway.enrollment 
+                inner join railway.courses on courses.courseCode=enrollment.courseCode  
+                where endDate > CURRENT_DATE AND courses.courseCode=?";
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(1, $dropCourse);
-        $stmt->bindParam(2, $id);
-        try {
+        try{
             $stmt->execute();
-        } catch (PDOException $e) {
+        }catch(PDOException $e){
+            echo $e;
+
+        }
+        $result=$stmt->fetchAll();
+
+        if(sizeof($result)!=0){
+            $sql = "DELETE FROM railway.enrollment WHERE courseCode=? AND studentID=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $dropCourse);
+            $stmt->bindParam(2, $id);
+            $result=$stmt->execute();
+            header("location: registrationform.php");
+        }
+        else {
             echo '<script type="text/javascript">
-                window.alert("ERROR DROPPING THE COURSE");
-                window.location.href="newcourse.html"
+                window.alert("Deadline to drop course has passed");
+                window.location.href="registrationform.php"
                 $_POST=null;
                 </script>';
+            return;
         }
-        header("location: registrationform.php");
     }
 
     public function displayCoursesTable($adminReq=false)
@@ -375,26 +413,29 @@ class BusinessLogic
 
     public function displayStudentsInCourse($arr, $courseToDisplay)
     {
+        echo "<table >";
+        echo "<tr>";
+        echo "<th>Course</th>";
+        echo "<th>Course Title</th>";
+        echo "<th>Student ID</th>";
+        echo "<th>Student Name</th>";
+        echo "</tr>";
         if (sizeof($arr) > 0) {
-            echo "<table >";
-            echo "<tr>";
-            echo "<th>Course</th>";
-            echo "<th>Student ID</th>";
-            echo "</tr>";
-
             foreach ($arr as $row) {
                 echo "<tr>";
                 echo "<td>" . $courseToDisplay. "</td>";
+                echo "<td>" . $row['title'] . "</td>";
                 echo "<td>" . $row['studentID'] . "</td>";
+                echo "<td>" . $row['name'] . "</td>";
                 echo "</tr>";
             }
-            echo "</table>";
         }
+        echo "</table>";
     }
 
     public function createID(){
         extract($_SESSION);
-        $sql = "SELECT CONCAT(person.firstName,' ',person.lastName) as name FROM railway.enrollment INNER JOIN railway.person ON person.personalID=enrollment.studentID WHERE studentID=?";
+        $sql = "SELECT CONCAT(person.firstName,' ',person.lastName) as name FROM railway.person  WHERE personalID=?";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(1, $id);
         $stmt->execute();
