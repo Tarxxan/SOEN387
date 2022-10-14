@@ -50,6 +50,23 @@ form div {
     box-shadow: none;
 }
 
+
+.form-control input {
+    border: solid 2px #f0f0f0;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    display: block;
+    width: 100%;
+}
+
+.form-control input:focus {
+    outline: none;
+}
+
+
+
 .form-group {
 
     margin: 3%;

@@ -16,7 +16,7 @@
     </div>
 
     <div class="navbar">
-        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a class="right" href="home.html">Logout</a>
         <a href="adminsite.php">Reports</a>
         <a href="newemployee.html">New employee</a>
         <a class="active" href="newstudent.html">New student</a>
@@ -26,74 +26,85 @@
 
     <div class="content-wrapper w-container ">
 
-
-        <form action="BusinessLogic.php" method="post" target="_self">
+        <!--action="BusinessLogic.php"-->
+        <form novalidate name="nsform"  method="post" target="_self">
             <div class="row card">
                 <div class="column">
                     <div class="form-group">
 
-                        <label>
-                            <input class="form-control" name="nsname" placeholder="Name" required type="text">
-                        </label>
+
+                        <input class="form-control" name="nsname" placeholder="Name" autocomplete="off" type="text">
+
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <label>
-                            <input class="form-control" name="nslastname" placeholder="Last Name" required type="text">
-                        </label>
+
+                        <input class="form-control" name="nslastname" placeholder="Last Name" autocomplete="off"
+                               type="text">
+
+                        <small></small>
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="nsestreetnumber" pattern="[0-9]{1,5}"
-                               placeholder="Street number" required
+                        <input class="form-control" name="nsestreetnumber"
+                               placeholder="Street number"
                                type="text">
+                        <small></small>
                     </div>
                     <div class="form-group">
                         <input class="form-control" name="nsstreetname" placeholder="Street name"
-                               required
+
+                               autocomplete="off" type="text">
+                        <small></small>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nscity" placeholder="City" autocomplete="off" type="text">
+                        <small></small>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="nsprovince" placeholder="Province" autocomplete="off"
                                type="text">
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nscity" placeholder="City" required type="text">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" name="nsprovince" placeholder="Province" required type="text">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" name="nspostalcode"
-                               pattern="^[A-Z][1-9][a-zA-Z]\s{1}[1-9][A-Z][1-9]$"
-                               placeholder="Postal Code" required type="text">
+                        <input class="form-control" name="nspostalcode" autocomplete="off"
+
+                               placeholder="Postal Code" type="text">
+                        <small></small>
                     </div>
                     <button class="btn center-box" onclick="window.location.href='adminsite.html';">Cancel
                     </button>
                 </div>
                 <div class=" column">
                     <div class="form-group">
-                        <input class="form-control" name="nsemail" placeholder="Email" required type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                        <input class="form-control" name="nsemail" autocomplete="off" placeholder="Email" type="email">
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nphone" pattern="[0-9]{3}\s[0-9]{2}-[0-9]{3}"
-                               placeholder="Phone number"
-                               required
+                        <input class="form-control" name="nsphone" autocomplete="off" placeholder="Phone number"
                                type="tel">
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nsdateofbirth" placeholder="Date of birth" required
+                        <input class="form-control" name="nsdateofbirth" placeholder="Date of birth" autocomplete="off"
                                type="date">
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nspassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        <input class="form-control" name="nspassword" autocomplete="off"
                                placeholder="Password"
-                               required
+
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                type="password">
+                        <small></small>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="nsconfirm-password"
-                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        <input class="form-control" name="nsconfirm-password" autocomplete="off"
                                placeholder="confirm-password"
-                               required
+
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                type="password">
+                        <small></small>
                     </div>
 
                     <input class="center-box" name="nssubmit" type="submit" value="Save">

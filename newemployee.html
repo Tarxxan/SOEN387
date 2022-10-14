@@ -14,7 +14,7 @@
         <h2>New&nbsp;administrator&nbsp;account</h2>
     </div>
     <div class="navbar">
-        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a class="right" href="home.html" >Logout</a>
         <a href="adminsite.php">Reports</a>
         <a class="active" href="newemployee.html">New employee</a>
         <a href="newstudent.html">New student</a>
@@ -25,9 +25,10 @@
     <div class="content-wrapper w-container ">
 
 
-        <form action="BusinessLogic.php" method="post" target="_self">
+        <form action="BusinessLogic.php" name="nsform" method="post" target="_self">
             <div class="row card">
                 <div class="column">
+
                     <div class="form-group">
 
                         <input class="form-control" name="nename" placeholder="Name" required type="text">
@@ -80,8 +81,8 @@
                                type="password">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="neconfirm-password"
-                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        <input class="form-control" name="neconfirmpassword"
+
                                placeholder="confirm-password"
                                required
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"

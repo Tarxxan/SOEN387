@@ -20,7 +20,7 @@ $b = new BusinessLogic();
     </div>
 
     <div class="navbar">
-        <a class="right" href="home.html" onclick="processLogout()">Logout</a>
+        <a class="right" href="home.html" >Logout</a>
         <a class="active" href="registrationform.php">Enrollment</a>
 
     </div>
@@ -42,8 +42,7 @@ $b = new BusinessLogic();
                             ?>
                         </select>
                     </div>
-                        <input class="form-control" name="nedateofbirth" placeholder="Date of birth" required
-                               type="date">
+
                     <input type="submit" name="sfsubmit" value="Add Course"/>
                 </form>
 
@@ -57,8 +56,7 @@ $b = new BusinessLogic();
                             $b->courseById();
                             ?>
                         </select>
-                            <input class="form-control" name="nedateofbirth" placeholder="Date of birth" required
-                                   type="date">
+
                     </div>
                     <input type="submit" name="sdsubmit" value="Drop Courses"/>
                 </form>

@@ -1,4 +1,5 @@
 <link href="settings/styles.css" rel="stylesheet"/>
+
 <?php
 include "database.php";
 
@@ -78,9 +79,9 @@ class BusinessLogic
         //Redirection checks for both students and admins
         if (!$result && $this->student) {
             echo '<script type="text/javascript">
-                window.alert("Invalid ID/Password combination try again");
-                window.location.href="home.html"
-                </script>';
+               alert("Invalid ID/Password combination try again");
+               window.location.href="home.html"
+                          </script>';
 
         } elseif (!$result && !($this->bl->student) && isset($employeeid)) {
             echo '<script type="text/javascript">
@@ -88,7 +89,8 @@ class BusinessLogic
             window.location.href="home.html"</script>';
         } else {
             if ($this->student)
-                header("Location: registrationform.php");
+
+                 header("Location: registrationform.php");
             else {
                 header("Location: adminsite.php");
             }
@@ -132,9 +134,6 @@ class BusinessLogic
         $bind = array($nemployeeid, $nemployeeid);
         $stmt = $this->bindALl($stmt, $bind);
         $stmt->execute();
-
-        // REDIRECT PAGE TO CREATE A REPORT OR TO ADD COURSES( CAROLINA)
-      //  header("location: adminsite.php");
 
     }
 
