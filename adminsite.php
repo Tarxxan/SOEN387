@@ -66,7 +66,7 @@ $b = new BusinessLogic(); ?>
 </div>
     </div>
 
-    <script src="settings/functions.js" type="text/javascript"></script>
+
     <footer class="footer">
 
     </footer>

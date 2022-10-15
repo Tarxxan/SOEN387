@@ -6,13 +6,13 @@ let namespattern=/[a-zA-Z\s]+(\.)? [a-zA-Z]+/g;
 let phonepattern=/[0-9]{3}\s[0-9]{2}-[0-9]{3}/
 
 function validatensformForm() {
-
     let name = document.forms ["nsform"] ["nsname"].value.trim();
     let lastname = document.forms ["nsform"] ["nslastname"].value.trim();
     let streetnumber = document.forms ["nsform"] ["nsestreetnumber"].value.trim();
     let streetname = document.forms ["nsform"] ["nsstreetname"].value.trim();
     let city = document.forms ["nsform"] ["nscity"].value.trim();
     let province = document.forms ["nsform"] ["nsprovince"].value.trim();
+    let country = document.forms ["nsform"] ["nscountry"].value.trim();
     let postalcode = document.forms ["nsform"] ["nspostalcode"].value.trim();
     let email = document.forms ["nsform"] ["nsemail"].value.trim();
     let phone = document.forms ["nsform"] ["nsphone"].value.trim();
@@ -48,6 +48,10 @@ if( province === "") {
 alert ("province must be filled out");
 return false;
 }
+    if( country === "") {
+        alert ("Country must be filled out");
+        return false;
+    }
 if( postalcode === "") {
 alert ("postal code must be filled out");
 return false;
@@ -82,7 +86,7 @@ return false;
     alert("Invalid Password combination try again");
     return false;
     }
-    if(!confirmpassword===password){
+    if(confirmpassword!==password){
         alert("Password confirmation does not match the password chosen try again");
         return false;
     }
@@ -99,11 +103,11 @@ return false;
     }
 
  if(lastname.match(namespattern)  ){
-alert( "    try again ");
+alert( "Wrong name , try again ");
  return false;
  }
  if(!streetnumber.match( /^\d+$/) ){
-alert( "    try again ");
+alert( "Wrong street number, try again ");
  return false;
  }
  if(!streetname.match( namespattern)   ){

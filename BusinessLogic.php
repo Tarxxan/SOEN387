@@ -125,7 +125,7 @@ class BusinessLogic
         $sql = "INSERT INTO railway.person(personalID,firstName,lastName,email,phoneNumber,dateOfBirth,streetName,streetNumber,city,country,postalCode)
         VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->db->prepare($sql);
-        $bind = array($nemployeeid, $nename, $nelastname, $nemail, $nephone, $nedateofbirth, $nestreetname, $neestreetnumber, $necity, $necountry, $nepostalcode);
+        $bind = array($nemployeeid, $nename, $nelastname, $neemail, $nephone, $nedateofbirth, $nestreetname, $neestreetnumber, $necity, $necountry, $nepostalcode);
         $stmt = $this->bindAll($stmt, $bind);
         $stmt->execute();
 
