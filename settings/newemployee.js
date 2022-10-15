@@ -1,8 +1,7 @@
 
-
 let passwordpattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 let postalcodepattern=/^[A-Z][1-9][a-zA-Z]\s[1-9][A-Z][1-9]$/g;
-let namespattern=/[a-zA-Z\s]+(\.)? [a-zA-Z]+/g;
+let namespattern=/[a-zA-Z\s]+(\.)?[a-zA-Z]+/g;
 let phonepattern=/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
 let emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 let datepattern = /^\d{4}-\d{2}-\d{2}$/
@@ -83,22 +82,51 @@ function validateneformForm() {
         return false;
     }
     if(!phone.match(phonepattern)){
-        alert( "wrong phone number, try again ");
+        alert("wrong phone number, try again ");
         return false;
     }
+    if(!name.match(namespattern)  ){
+        alert( "Invalid Name, try again");
+        return false;
+    }
+    if(!lastname.match(namespattern)  ){
+        alert( "Invalid Last Name, try again");
+        return false;
+    }
+    if(!streetnumber.match( /^\d+$/) ){
+        alert("Invalid street number, try again");
+        return false;
+    }
+    if(!streetname.match( namespattern)   ){
+        alert("Invalid street name, try again");
+        return false;
+    }
+    if(!city.match( namespattern )){
+        alert( "Invalid city name, try again");
+        return false;
+    }
+    if(!province.match(namespattern)){
+        alert( "Invalid province name, try again" + province);
+        return false;
+    }
+    if(!postalcode.match(postalcodepattern )){
+        alert("Invalid postal code, try again");
+        return false;
+    }
+
     if(!dateofbirth.match(datepattern)){
         alert( "wrong dob, try again ");
         return false;
     }
 
-let match = password.match(passwordpattern);
-if (!match) {
-    alert("Invalid Password complexity, try again");
-    return false;
-}
+    let match = password.match(passwordpattern);
+    if (!match) {
+        alert("Invalid Password complexity, try again");
+        return false;
+    }
 
-if(confirmpassword!==password){
-    alert("Password confirmation does not match the password chosen try again");
-    return false;
-}
+    if(confirmpassword!==password){
+        alert("Password confirmation does not match the password chosen try again");
+        return false;
+    }
 }

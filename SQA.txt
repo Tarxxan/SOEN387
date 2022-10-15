@@ -1,8 +1,0 @@
-Dopping all courses for student 12345679 displays a warning instead of the name. BL 402
-
-The report for students in a course does not provide name with the student ID or the title of the course
-
-If a course has no students, there should be an empty table with the header or a message of some kind
-
-Add name of the Administrator to the header
-
