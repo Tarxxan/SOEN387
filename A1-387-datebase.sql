@@ -1,7 +1,7 @@
 -- A1_SOEN387.person definition
 
 CREATE TABLE `person` (
-  `personalID` int(10) NOT NULL,
+  `personalID` int(10) AUTO_INCREMENT,
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
