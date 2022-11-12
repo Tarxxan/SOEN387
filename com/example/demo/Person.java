@@ -1,3 +1,5 @@
+package com.example.demo;
+
 import java.sql.Date;
 
 public class Person {
@@ -34,6 +36,7 @@ public class Person {
         this.streetNumber = streetNumber;
     }
 
+    public Person(){}
     public int getPersonalID() {
         return personalID;
     }
